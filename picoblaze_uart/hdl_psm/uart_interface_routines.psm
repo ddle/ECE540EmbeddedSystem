@@ -6,12 +6,12 @@
                    ;------------------------------------------------------------------------------------------
                    ;
                    ; Ken Chapman - Xilinx Ltd 23rd April 2012
-				   ;
+                   ;
                    ; Modified by Dung Le
-				   ; 
-				   ; 10th Oct 2012 - modified to simple read/echo via uart, move "send" routines from 
-				   ; uart_control.psm over here. - Le
-				   ;------------------------------------------------------------------------------------------
+                   ;
+                   ; 10th Oct 2012 - modified to simple read/echo via uart, move "send" routines from
+                   ; uart_control.psm over here. - Le
+                   ;------------------------------------------------------------------------------------------
                    ; This file contains routines used to interface with the UART6 macros provided with KCPSM6
                    ; and was first supplied with a reference design called 'uart6_605' included in the
                    ; PicoBlaze package. The routines enable characters to be transmitted to and received
@@ -73,34 +73,34 @@
                    CONSTANT UART_operate, 00000000'b         ; Tx and Rx free to operate
                    ;
                    ;
-				    ;------------------------------------------------------------------------------------------
-                    ; Scratch Pad Memory Locations
-                    ;------------------------------------------------------------------------------------------
-                    ;
-                    CONSTANT hex_value0, 00         ;16-bit value (lower byte)
-                    CONSTANT hex_value1, 01         ;16-bit value (upper byte)
-                    ;
-                    CONSTANT decimal0, 02           ;5 digit decimal value
-                    CONSTANT decimal1, 03           ;  Suitable for 16-bit values up to
-                    CONSTANT decimal2, 04           ;   65,536
-                    CONSTANT decimal3, 05
-                    CONSTANT decimal4, 06
-                    ;
-                    ;
-                    ;------------------------------------------------------------------------------------------
-                    ; Useful data constants
-                    ;------------------------------------------------------------------------------------------
-                    ;
-                    ;
-                    ; ASCII codes
-                    ;
-                    CONSTANT character_NULL, 00     ;NULL
-                    CONSTANT character_BS, 08       ;Back Space
-                    CONSTANT character_LF, 0A       ;line feed
-                    CONSTANT character_CR, 0D       ;carriage return
-                    CONSTANT character_ESC, 1B      ;Escape
-                    ;
-                    ;
+                   ;------------------------------------------------------------------------------------------
+                   ; Scratch Pad Memory Locations
+                   ;------------------------------------------------------------------------------------------
+                   ;
+                   CONSTANT hex_value0, 00                   ;16-bit value (lower byte)
+                   CONSTANT hex_value1, 01                   ;16-bit value (upper byte)
+                   ;
+                   CONSTANT decimal0, 02                     ;5 digit decimal value
+                   CONSTANT decimal1, 03                     ;  Suitable for 16-bit values up to
+                   CONSTANT decimal2, 04                     ;   65,536
+                   CONSTANT decimal3, 05
+                   CONSTANT decimal4, 06
+                   ;
+                   ;
+                   ;------------------------------------------------------------------------------------------
+                   ; Useful data constants
+                   ;------------------------------------------------------------------------------------------
+                   ;
+                   ;
+                   ; ASCII codes
+                   ;
+                   CONSTANT character_NULL, 00               ;NULL
+                   CONSTANT character_BS, 08                 ;Back Space
+                   CONSTANT character_LF, 0A                 ;line feed
+                   CONSTANT character_CR, 0D                 ;carriage return
+                   CONSTANT character_ESC, 1B                ;Escape
+                   ;
+                   ;
                    ;--------------------------------------------------------------------------------------
                    ; Routine to reset UART Buffers inside 'UART_TX6' and 'UART_RX6'
                    ;--------------------------------------------------------------------------------------
@@ -171,72 +171,70 @@ reset_UART_macros: OUTPUTK UART_reset, reset_UART_port
                    RETURN 
                    ;
                    ;
-				    ;------------------------------------------------------------------------------------------
-                    ; Send a message to the UART
-                    ;------------------------------------------------------------------------------------------
-                    ;
-                    ; A message is transmitted to the USB-UART.
-                    ; The start address of the message must be provided in [sB,sA].
-                    ; Terminate the transmission with a NULL character (00 hex).
-                    ;
-      send_message: CALL@ (sB, sA)
-                    COMPARE s5, 00                  ;terminate on NUL character
-                    RETURN Z
-                    CALL UART_TX
-                    ADD sA, 1'd
-                    ADDCY sB, 0'd
-                    JUMP send_message
-                    ;
-                    ;
-                    ;------------------------------------------------------------------------------------------
-                    ; Send Carriage Return to UART
-                    ;------------------------------------------------------------------------------------------
-                    ;
-                    ; Registers used s0, s1, s2, and s5.
-                    ;
-           send_CR: LOAD s5, character_CR
-                    JUMP UART_TX                    ;includes RETURN
-                    ;
-                    ;
-                    ;------------------------------------------------------------------------------------------
-                    ; Send a Space to UART
-                    ;------------------------------------------------------------------------------------------
-                    ;
-                    ; Registers used s0, s1, s2, and s5.
-                    ;
-        send_space: LOAD s5, " "
-                    JUMP UART_TX                    ;includes RETURN
-                    ;
-                    ;
-				                       ;------------------------------------------------------------------------------------------
-                    ; Clear terminal and home cursor sequences for HyperTerminal (or similar)
-                    ;------------------------------------------------------------------------------------------
-                    ;
-                    ; ANSI Escape Sequences/codes (VT100)
-                    ;
-      clear_screen: LOAD s5, character_ESC          ;clear terminal sequence
-                    CALL UART_TX
-                    LOAD s5, "["
-                    CALL UART_TX
-                    LOAD s5, "2"
-                    CALL UART_TX
-                    LOAD s5, "J"
-                    CALL UART_TX
-                    CALL delay_1ms                  ;Delay for reliable operation
-                    RETURN 
-                    ;
-       cursor_home: LOAD s5, character_ESC          ;Send cursor to upper-left of display
-                    CALL UART_TX
-                    LOAD s5, "["
-                    CALL UART_TX
-                    LOAD s5, "H"
-                    CALL UART_TX
-                    CALL delay_1ms                  ;Delay for reliable operation
-                    RETURN 
-                    ;
-                    ;
-				   
-				   
+                   ;------------------------------------------------------------------------------------------
+                   ; Send a message to the UART
+                   ;------------------------------------------------------------------------------------------
+                   ;
+                   ; A message is transmitted to the USB-UART.
+                   ; The start address of the message must be provided in [sB,sA].
+                   ; Terminate the transmission with a NULL character (00 hex).
+                   ;
+     send_message: CALL@ (sB, sA)
+                   COMPARE s5, 00                            ;terminate on NUL character
+                   RETURN Z
+                   CALL UART_TX
+                   ADD sA, 1'd
+                   ADDCY sB, 0'd
+                   JUMP send_message
+                   ;
+                   ;
+                   ;------------------------------------------------------------------------------------------
+                   ; Send Carriage Return to UART
+                   ;------------------------------------------------------------------------------------------
+                   ;
+                   ; Registers used s0, s1, s2, and s5.
+                   ;
+          send_CR: LOAD s5, character_CR
+                   JUMP UART_TX                              ;includes RETURN
+                   ;
+                   ;
+                   ;------------------------------------------------------------------------------------------
+                   ; Send a Space to UART
+                   ;------------------------------------------------------------------------------------------
+                   ;
+                   ; Registers used s0, s1, s2, and s5.
+                   ;
+       send_space: LOAD s5, " "
+                   JUMP UART_TX                              ;includes RETURN
+                   ;
+                   ;
+                   ;------------------------------------------------------------------------------------------
+                   ; Clear terminal and home cursor sequences for HyperTerminal (or similar)
+                   ;------------------------------------------------------------------------------------------
+                   ;
+                   ; ANSI Escape Sequences/codes (VT100)
+                   ;
+     clear_screen: LOAD s5, character_ESC                    ;clear terminal sequence
+                   CALL UART_TX
+                   LOAD s5, "["
+                   CALL UART_TX
+                   LOAD s5, "2"
+                   CALL UART_TX
+                   LOAD s5, "J"
+                   CALL UART_TX
+                   CALL delay_1ms                            ;Delay for reliable operation
+                   RETURN 
+                   ;
+      cursor_home: LOAD s5, character_ESC                    ;Send cursor to upper-left of display
+                   CALL UART_TX
+                   LOAD s5, "["
+                   CALL UART_TX
+                   LOAD s5, "H"
+                   CALL UART_TX
+                   CALL delay_1ms                            ;Delay for reliable operation
+                   RETURN 
+                   ;
+                   ;
                    ;------------------------------------------------------------------------------------------
                    ; End of 'uart_interface_routines.psm"'
                    ;------------------------------------------------------------------------------------------
