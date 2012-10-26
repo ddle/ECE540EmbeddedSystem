@@ -1,4 +1,4 @@
-Picoblaze and Uart example, Dung Le 2012
+Picoblaze example, Dung Le 2012
 -------------------------------------------------------------------------------
 Hardware : Nexys 3 FPGA board, serial port at jumper JD1 and JD7
 How to:
