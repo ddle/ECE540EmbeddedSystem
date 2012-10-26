@@ -1,0 +1,42 @@
+ main: 
+       LOAD sE, 09
+       LOAD sD, 09
+       CALL div8u
+       JUMP main
+       ;***************************************************************************
+       ;*
+       ;* "div8u" - 8/8 Bit Unsigned Division
+       ;*
+       ;* This subroutine divides the two register variables "dd8u" (dividend) and
+       ;* "dv8u" (divisor).
+       ;*
+       ;* The result is placed in "dres8u" and the remainder in "drem8u".
+       ;*
+       ;* NOTE: CHECK IF DIVISOR IS ZERO BEFORE CALLING THIS ROUTINE
+       ;*
+       ;***************************************************************************
+       ;***** Subroutine Register Variables
+       ;CONSTANT    drem8u,    sF        ;remainder
+       ;CONSTANT    dres8u,    sE        ;result
+       ;CONSTANT    dd8u,      sE        ;dividend
+       ;CONSTANT    dv8u,      sD        ;divisor
+       ;CONSTANT    dcnt8u,    sC        ;loop counter
+       ;***** Code
+div8u: 
+       SUB sF, sF     ;clear remainder and carry
+       LOAD sC, 09    ;init loop counter
+d8u_1: 
+       SLA sE         ;shift left dividend, C->BIT0, BIT7->C
+       SUB sC, 01     ;decrement counter
+       JUMP NZ, d8u_2 ;if done
+       RETURN         ;return
+d8u_2: 
+       SLA sF         ;shift dividend into remainder
+       SUB sF, sD     ;remainder = remainder - divisor
+       JUMP NC, d8u_3 ;if result negative
+       ADD sF, sD     ;restore remainder
+       AND sF, FF     ;clear carry to be shifted into result, notice this will not effect current Z flag
+       JUMP d8u_1     ;else
+d8u_3: 
+       COMPARE sF, FF ;set carry to be shifted into result
+       JUMP d8u_1
