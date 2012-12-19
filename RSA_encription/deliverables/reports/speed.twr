@@ -1,0 +1,1242 @@
+--------------------------------------------------------------------------------
+Release 14.2 Trace  (nt64)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+
+C:\Xilinx\14.2\ISE_DS\ISE\bin\nt64\unwrapped\trce.exe -intstyle ise -v 3 -s 3
+-n 3 -fastpaths -xml s6efpga.twx s6efpga.ncd -o s6efpga.twr s6efpga.pcf
+
+Design file:              s6efpga.ncd
+Physical constraint file: s6efpga.pcf
+Device,package,speed:     xc6slx16,csg324,C,-3 (PRODUCTION 1.22 2012-07-09)
+Report level:             verbose report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:3412 - To improve timing, see the Timing Closure User Guide (UG612).
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+
+================================================================================
+Timing constraint: TS_sys_clk_pin = PERIOD TIMEGRP "sys_clk_pin" 100 MHz HIGH 
+50%;
+For more information, see Period Analysis in the Timing Closure User Guide (UG612).
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   5.340ns.
+--------------------------------------------------------------------------------
+
+Component Switching Limit Checks: TS_sys_clk_pin = PERIOD TIMEGRP "sys_clk_pin" 100 MHz HIGH 50%;
+--------------------------------------------------------------------------------
+Slack: 3.044ns (period - min period limit)
+  Period: 5.714ns
+  Min period limit: 2.670ns (374.532MHz) (Tdcmper_CLKFX)
+  Physical resource: DCM/CLKFX
+  Logical resource: DCM/CLKFX
+  Location pin: DCM_X0Y1.CLKFX
+  Clock network: sysclk
+--------------------------------------------------------------------------------
+Slack: 4.660ns (period - (min low pulse limit / (low pulse / period)))
+  Period: 10.000ns
+  Low pulse: 5.000ns
+  Low pulse limit: 2.670ns (Tdcmpw_CLKIN_100_150)
+  Physical resource: DCM/CLKIN
+  Logical resource: DCM/CLKIN
+  Location pin: DCM_X0Y1.CLKIN
+  Clock network: DCM_ML_NEW_DIVCLK
+--------------------------------------------------------------------------------
+Slack: 4.660ns (period - (min high pulse limit / (high pulse / period)))
+  Period: 10.000ns
+  High pulse: 5.000ns
+  High pulse limit: 2.670ns (Tdcmpw_CLKIN_100_150)
+  Physical resource: DCM/CLKIN
+  Logical resource: DCM/CLKIN
+  Location pin: DCM_X0Y1.CLKIN
+  Clock network: DCM_ML_NEW_DIVCLK
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_sysclk = PERIOD TIMEGRP "sysclk" TS_sys_clk_pin * 1.75 
+HIGH 50%;
+For more information, see Period Analysis in the Timing Closure User Guide (UG612).
+
+ 248035 paths analyzed, 11554 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   5.688ns.
+--------------------------------------------------------------------------------
+
+Paths for end point encr/MontProd0/S_127 (SLICE_X16Y47.A1), 195 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     0.026ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd0/S_reg_11 (FF)
+  Destination:          encr/MontProd0/S_127 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.459ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.037ns (0.424 - 0.461)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd0/S_reg_11 to encr/MontProd0/S_127
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X8Y26.DQ       Tcko                  0.408   encr/MontProd0/S_reg<11>
+                                                       encr/MontProd0/S_reg_11
+    SLICE_X8Y29.B4       net (fanout=8)        0.899   encr/MontProd0/S_reg<11>
+    SLICE_X8Y29.COUT     Topcyb                0.375   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<5>1
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X8Y30.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X8Y30.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X8Y31.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X8Y31.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X8Y32.CIN      net (fanout=1)        0.108   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X8Y32.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X8Y33.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X8Y33.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X8Y34.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X8Y34.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X8Y35.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X8Y35.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X8Y36.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X8Y36.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X8Y37.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X8Y37.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X8Y38.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X8Y38.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X8Y39.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X8Y39.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X8Y40.CIN      net (fanout=1)        0.082   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X8Y40.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X8Y41.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X8Y41.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X8Y42.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X8Y42.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X8Y43.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X8Y43.CMUX     Tcinc                 0.279   encr/B0_reg<84>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X12Y44.D4      net (fanout=15)       0.871   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X12Y44.D       Tilo                  0.205   encr/P_reg<95>
+                                                       encr/MontProd0/M[127]_S_reg[127]_LessThan_22_o_REPLICA_30
+    SLICE_X16Y47.A1      net (fanout=2)        0.867   encr/MontProd0/M[127]_S_reg[127]_LessThan_22_o_REPLICA_30
+    SLICE_X16Y47.CLK     Tas                   0.341   encr/B1_reg<8>
+                                                       encr/MontProd0/current_state[5]_GND_7_o_select_32_OUT<1>1
+                                                       encr/MontProd0/S_127
+    -------------------------------------------------  ---------------------------
+    Total                                      5.459ns (2.596ns logic, 2.863ns route)
+                                                       (47.6% logic, 52.4% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.114ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd0/S_reg_6 (FF)
+  Destination:          encr/MontProd0/S_127 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.374ns (Levels of Logic = 18)
+  Clock Path Skew:      -0.034ns (0.424 - 0.458)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd0/S_reg_6 to encr/MontProd0/S_127
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X8Y25.CQ       Tcko                  0.408   encr/MontProd0/S_reg<3>
+                                                       encr/MontProd0/S_reg_6
+    SLICE_X8Y28.D4       net (fanout=8)        0.850   encr/MontProd0/S_reg<6>
+    SLICE_X8Y28.COUT     Topcyd                0.260   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<3>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<3>1
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<3>
+    SLICE_X8Y29.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<3>
+    SLICE_X8Y29.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X8Y30.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X8Y30.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X8Y31.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X8Y31.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X8Y32.CIN      net (fanout=1)        0.108   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X8Y32.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X8Y33.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X8Y33.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X8Y34.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X8Y34.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X8Y35.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X8Y35.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X8Y36.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X8Y36.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X8Y37.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X8Y37.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X8Y38.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X8Y38.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X8Y39.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X8Y39.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X8Y40.CIN      net (fanout=1)        0.082   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X8Y40.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X8Y41.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X8Y41.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X8Y42.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X8Y42.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X8Y43.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X8Y43.CMUX     Tcinc                 0.279   encr/B0_reg<84>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X12Y44.D4      net (fanout=15)       0.871   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X12Y44.D       Tilo                  0.205   encr/P_reg<95>
+                                                       encr/MontProd0/M[127]_S_reg[127]_LessThan_22_o_REPLICA_30
+    SLICE_X16Y47.A1      net (fanout=2)        0.867   encr/MontProd0/M[127]_S_reg[127]_LessThan_22_o_REPLICA_30
+    SLICE_X16Y47.CLK     Tas                   0.341   encr/B1_reg<8>
+                                                       encr/MontProd0/current_state[5]_GND_7_o_select_32_OUT<1>1
+                                                       encr/MontProd0/S_127
+    -------------------------------------------------  ---------------------------
+    Total                                      5.374ns (2.557ns logic, 2.817ns route)
+                                                       (47.6% logic, 52.4% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.119ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd0/S_reg_29 (FF)
+  Destination:          encr/MontProd0/S_127 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.370ns (Levels of Logic = 15)
+  Clock Path Skew:      -0.033ns (0.424 - 0.457)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd0/S_reg_29 to encr/MontProd0/S_127
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X12Y29.BQ      Tcko                  0.408   encr/MontProd0/S_reg<31>
+                                                       encr/MontProd0/S_reg_29
+    SLICE_X8Y31.C3       net (fanout=8)        1.048   encr/MontProd0/S_reg<29>
+    SLICE_X8Y31.COUT     Topcyc                0.295   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<14>1
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X8Y32.CIN      net (fanout=1)        0.108   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X8Y32.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X8Y33.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X8Y33.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X8Y34.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X8Y34.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X8Y35.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X8Y35.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X8Y36.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X8Y36.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X8Y37.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X8Y37.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X8Y38.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X8Y38.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X8Y39.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X8Y39.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X8Y40.CIN      net (fanout=1)        0.082   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X8Y40.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X8Y41.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X8Y41.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X8Y42.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X8Y42.COUT     Tbyp                  0.076   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X8Y43.CIN      net (fanout=1)        0.003   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X8Y43.CMUX     Tcinc                 0.279   encr/B0_reg<84>
+                                                       encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X12Y44.D4      net (fanout=15)       0.871   encr/MontProd0/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X12Y44.D       Tilo                  0.205   encr/P_reg<95>
+                                                       encr/MontProd0/M[127]_S_reg[127]_LessThan_22_o_REPLICA_30
+    SLICE_X16Y47.A1      net (fanout=2)        0.867   encr/MontProd0/M[127]_S_reg[127]_LessThan_22_o_REPLICA_30
+    SLICE_X16Y47.CLK     Tas                   0.341   encr/B1_reg<8>
+                                                       encr/MontProd0/current_state[5]_GND_7_o_select_32_OUT<1>1
+                                                       encr/MontProd0/S_127
+    -------------------------------------------------  ---------------------------
+    Total                                      5.370ns (2.364ns logic, 3.006ns route)
+                                                       (44.0% logic, 56.0% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point encr/MontProd1/S_125 (SLICE_X37Y51.B6), 251 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     0.030ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_4 (FF)
+  Destination:          encr/MontProd1/S_125 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.471ns (Levels of Logic = 32)
+  Clock Path Skew:      -0.021ns (0.385 - 0.406)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_4 to encr/MontProd1/S_125
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X34Y33.DQ      Tcko                  0.447   encr/MontProd1/S_reg<4>
+                                                       encr/MontProd1/S_reg_4
+    SLICE_X36Y31.A6      net (fanout=8)        0.570   encr/MontProd1/S_reg<4>
+    SLICE_X36Y31.COUT    Topcya                0.395   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+                                                       encr/MontProd1/S_reg<4>_rt
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X36Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X36Y32.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X36Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X36Y33.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X36Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X36Y34.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X36Y35.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X36Y35.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X36Y36.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X36Y36.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X36Y37.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X36Y37.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X36Y38.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X36Y38.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X36Y39.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X36Y39.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X36Y40.CIN     net (fanout=1)        0.082   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X36Y40.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X36Y41.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X36Y41.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X36Y42.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X36Y42.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X36Y43.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X36Y43.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X36Y44.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X36Y44.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X36Y45.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X36Y45.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X36Y46.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X36Y46.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X36Y47.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X36Y47.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X36Y48.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X36Y48.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X36Y49.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X36Y49.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X36Y50.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X36Y50.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X36Y51.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X36Y51.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X36Y52.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X36Y52.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X36Y53.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X36Y53.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X36Y54.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X36Y54.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X36Y55.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X36Y55.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X36Y56.CIN     net (fanout=1)        0.082   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X36Y56.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X36Y57.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X36Y57.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X36Y58.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X36Y58.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X36Y59.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X36Y59.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X36Y60.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X36Y60.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X36Y61.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X36Y61.BMUX    Tcinb                 0.260   encr/MontProd1/S_reg[127]_M[127]_sub_23_OUT<127>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_xor<127>
+    SLICE_X37Y51.B6      net (fanout=1)        0.920   encr/MontProd1/S_reg[127]_M[127]_sub_23_OUT<125>
+    SLICE_X37Y51.CLK     Tas                   0.322   encr/MontProd1/S<100>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<3>1
+                                                       encr/MontProd1/S_125
+    -------------------------------------------------  ---------------------------
+    Total                                      5.471ns (3.628ns logic, 1.843ns route)
+                                                       (66.3% logic, 33.7% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.076ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_5 (FF)
+  Destination:          encr/MontProd1/S_125 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.425ns (Levels of Logic = 32)
+  Clock Path Skew:      -0.021ns (0.385 - 0.406)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_5 to encr/MontProd1/S_125
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X34Y33.BQ      Tcko                  0.447   encr/MontProd1/S_reg<4>
+                                                       encr/MontProd1/S_reg_5
+    SLICE_X36Y31.B6      net (fanout=8)        0.544   encr/MontProd1/S_reg<5>
+    SLICE_X36Y31.COUT    Topcyb                0.375   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+                                                       encr/MontProd1/S_reg<5>_rt
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X36Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X36Y32.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X36Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X36Y33.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X36Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X36Y34.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X36Y35.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X36Y35.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X36Y36.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X36Y36.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X36Y37.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X36Y37.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X36Y38.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X36Y38.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X36Y39.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X36Y39.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X36Y40.CIN     net (fanout=1)        0.082   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X36Y40.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X36Y41.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X36Y41.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X36Y42.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X36Y42.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X36Y43.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X36Y43.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X36Y44.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X36Y44.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X36Y45.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X36Y45.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X36Y46.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X36Y46.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X36Y47.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X36Y47.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X36Y48.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X36Y48.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X36Y49.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X36Y49.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X36Y50.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X36Y50.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X36Y51.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X36Y51.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X36Y52.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X36Y52.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X36Y53.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X36Y53.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X36Y54.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X36Y54.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X36Y55.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X36Y55.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X36Y56.CIN     net (fanout=1)        0.082   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X36Y56.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X36Y57.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X36Y57.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X36Y58.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X36Y58.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X36Y59.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X36Y59.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X36Y60.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X36Y60.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X36Y61.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X36Y61.BMUX    Tcinb                 0.260   encr/MontProd1/S_reg[127]_M[127]_sub_23_OUT<127>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_xor<127>
+    SLICE_X37Y51.B6      net (fanout=1)        0.920   encr/MontProd1/S_reg[127]_M[127]_sub_23_OUT<125>
+    SLICE_X37Y51.CLK     Tas                   0.322   encr/MontProd1/S<100>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<3>1
+                                                       encr/MontProd1/S_125
+    -------------------------------------------------  ---------------------------
+    Total                                      5.425ns (3.608ns logic, 1.817ns route)
+                                                       (66.5% logic, 33.5% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.093ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_4 (FF)
+  Destination:          encr/MontProd1/S_125 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.408ns (Levels of Logic = 32)
+  Clock Path Skew:      -0.021ns (0.385 - 0.406)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_4 to encr/MontProd1/S_125
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X34Y33.DQ      Tcko                  0.447   encr/MontProd1/S_reg<4>
+                                                       encr/MontProd1/S_reg_4
+    SLICE_X36Y31.AX      net (fanout=8)        0.677   encr/MontProd1/S_reg<4>
+    SLICE_X36Y31.COUT    Taxcy                 0.225   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X36Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X36Y32.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X36Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X36Y33.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X36Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X36Y34.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X36Y35.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X36Y35.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X36Y36.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X36Y36.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X36Y37.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X36Y37.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X36Y38.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X36Y38.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X36Y39.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X36Y39.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X36Y40.CIN     net (fanout=1)        0.082   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X36Y40.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X36Y41.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X36Y41.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X36Y42.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X36Y42.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X36Y43.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X36Y43.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X36Y44.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X36Y44.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X36Y45.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X36Y45.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X36Y46.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X36Y46.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X36Y47.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X36Y47.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X36Y48.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X36Y48.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X36Y49.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X36Y49.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X36Y50.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X36Y50.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X36Y51.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X36Y51.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X36Y52.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X36Y52.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X36Y53.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X36Y53.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X36Y54.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X36Y54.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X36Y55.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X36Y55.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X36Y56.CIN     net (fanout=1)        0.082   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X36Y56.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X36Y57.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X36Y57.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X36Y58.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X36Y58.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X36Y59.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X36Y59.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X36Y60.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X36Y60.COUT    Tbyp                  0.076   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X36Y61.CIN     net (fanout=1)        0.003   encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X36Y61.BMUX    Tcinb                 0.260   encr/MontProd1/S_reg[127]_M[127]_sub_23_OUT<127>
+                                                       encr/MontProd1/Msub_S_reg[127]_M[127]_sub_23_OUT_xor<127>
+    SLICE_X37Y51.B6      net (fanout=1)        0.920   encr/MontProd1/S_reg[127]_M[127]_sub_23_OUT<125>
+    SLICE_X37Y51.CLK     Tas                   0.322   encr/MontProd1/S<100>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<3>1
+                                                       encr/MontProd1/S_125
+    -------------------------------------------------  ---------------------------
+    Total                                      5.408ns (3.458ns logic, 1.950ns route)
+                                                       (63.9% logic, 36.1% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point encr/MontProd0/S_127 (SLICE_X16Y47.A5), 255 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     0.041ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd0/S_reg_0 (FF)
+  Destination:          encr/MontProd0/S_127 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.449ns (Levels of Logic = 33)
+  Clock Path Skew:      -0.032ns (0.424 - 0.456)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd0/S_reg_0 to encr/MontProd0/S_127
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X8Y24.DQ       Tcko                  0.408   encr/MontProd0/S_reg<0>
+                                                       encr/MontProd0/S_reg_0
+    SLICE_X10Y23.A6      net (fanout=8)        0.521   encr/MontProd0/S_reg<0>
+    SLICE_X10Y23.COUT    Topcya                0.379   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+                                                       encr/MontProd0/S_reg<0>_rt
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+    SLICE_X10Y24.CIN     net (fanout=1)        0.082   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+    SLICE_X10Y24.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X10Y25.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X10Y25.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X10Y26.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X10Y26.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X10Y27.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X10Y27.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X10Y28.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X10Y28.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X10Y29.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X10Y29.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X10Y30.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X10Y30.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X10Y31.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X10Y31.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X10Y32.CIN     net (fanout=1)        0.108   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X10Y32.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X10Y33.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X10Y33.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X10Y34.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X10Y34.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X10Y35.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X10Y35.COUT    Tbyp                  0.076   encr/P_reg<11>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X10Y36.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X10Y36.COUT    Tbyp                  0.076   encr/P_reg<39>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X10Y37.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X10Y37.COUT    Tbyp                  0.076   encr/P_reg<43>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X10Y38.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X10Y38.COUT    Tbyp                  0.076   encr/P_reg<63>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X10Y39.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X10Y39.COUT    Tbyp                  0.076   encr/P_reg<67>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X10Y40.CIN     net (fanout=1)        0.082   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X10Y40.COUT    Tbyp                  0.076   encr/P_reg<75>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X10Y41.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X10Y41.COUT    Tbyp                  0.076   encr/P_reg<79>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X10Y42.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X10Y42.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X10Y43.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X10Y43.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X10Y44.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X10Y44.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X10Y45.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X10Y45.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X10Y46.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X10Y46.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X10Y47.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X10Y47.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X10Y48.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X10Y48.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X10Y49.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X10Y49.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X10Y50.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X10Y50.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X10Y51.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X10Y51.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X10Y52.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X10Y52.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X10Y53.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X10Y53.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X10Y54.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X10Y54.DMUX    Tcind                 0.302   encr/MontProd0/S_reg[127]_M[127]_sub_23_OUT<127>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_xor<127>
+    SLICE_X16Y47.A5      net (fanout=1)        0.862   encr/MontProd0/S_reg[127]_M[127]_sub_23_OUT<127>
+    SLICE_X16Y47.CLK     Tas                   0.341   encr/B1_reg<8>
+                                                       encr/MontProd0/current_state[5]_GND_7_o_select_32_OUT<1>1
+                                                       encr/MontProd0/S_127
+    -------------------------------------------------  ---------------------------
+    Total                                      5.449ns (3.710ns logic, 1.739ns route)
+                                                       (68.1% logic, 31.9% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.080ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd0/S_reg_3 (FF)
+  Destination:          encr/MontProd0/S_127 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.408ns (Levels of Logic = 33)
+  Clock Path Skew:      -0.034ns (0.424 - 0.458)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd0/S_reg_3 to encr/MontProd0/S_127
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X8Y25.DQ       Tcko                  0.408   encr/MontProd0/S_reg<3>
+                                                       encr/MontProd0/S_reg_3
+    SLICE_X10Y23.D6      net (fanout=8)        0.598   encr/MontProd0/S_reg<3>
+    SLICE_X10Y23.COUT    Topcyd                0.261   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+                                                       encr/MontProd0/S_reg<3>_rt
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+    SLICE_X10Y24.CIN     net (fanout=1)        0.082   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+    SLICE_X10Y24.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X10Y25.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X10Y25.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X10Y26.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X10Y26.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X10Y27.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X10Y27.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X10Y28.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X10Y28.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X10Y29.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X10Y29.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X10Y30.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X10Y30.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X10Y31.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X10Y31.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X10Y32.CIN     net (fanout=1)        0.108   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X10Y32.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X10Y33.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X10Y33.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X10Y34.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X10Y34.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X10Y35.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X10Y35.COUT    Tbyp                  0.076   encr/P_reg<11>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X10Y36.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X10Y36.COUT    Tbyp                  0.076   encr/P_reg<39>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X10Y37.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X10Y37.COUT    Tbyp                  0.076   encr/P_reg<43>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X10Y38.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X10Y38.COUT    Tbyp                  0.076   encr/P_reg<63>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X10Y39.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X10Y39.COUT    Tbyp                  0.076   encr/P_reg<67>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X10Y40.CIN     net (fanout=1)        0.082   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X10Y40.COUT    Tbyp                  0.076   encr/P_reg<75>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X10Y41.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X10Y41.COUT    Tbyp                  0.076   encr/P_reg<79>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X10Y42.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X10Y42.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X10Y43.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X10Y43.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X10Y44.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X10Y44.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X10Y45.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X10Y45.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X10Y46.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X10Y46.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X10Y47.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X10Y47.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X10Y48.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X10Y48.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X10Y49.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X10Y49.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X10Y50.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X10Y50.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X10Y51.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X10Y51.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X10Y52.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X10Y52.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X10Y53.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X10Y53.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X10Y54.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X10Y54.DMUX    Tcind                 0.302   encr/MontProd0/S_reg[127]_M[127]_sub_23_OUT<127>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_xor<127>
+    SLICE_X16Y47.A5      net (fanout=1)        0.862   encr/MontProd0/S_reg[127]_M[127]_sub_23_OUT<127>
+    SLICE_X16Y47.CLK     Tas                   0.341   encr/B1_reg<8>
+                                                       encr/MontProd0/current_state[5]_GND_7_o_select_32_OUT<1>1
+                                                       encr/MontProd0/S_127
+    -------------------------------------------------  ---------------------------
+    Total                                      5.408ns (3.592ns logic, 1.816ns route)
+                                                       (66.4% logic, 33.6% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.085ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd0/S_reg_0 (FF)
+  Destination:          encr/MontProd0/S_127 (FF)
+  Requirement:          5.714ns
+  Data Path Delay:      5.405ns (Levels of Logic = 33)
+  Clock Path Skew:      -0.032ns (0.424 - 0.456)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.192ns
+
+  Clock Uncertainty:          0.192ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.314ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd0/S_reg_0 to encr/MontProd0/S_127
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X8Y24.DQ       Tcko                  0.408   encr/MontProd0/S_reg<0>
+                                                       encr/MontProd0/S_reg_0
+    SLICE_X10Y23.AX      net (fanout=8)        0.657   encr/MontProd0/S_reg<0>
+    SLICE_X10Y23.COUT    Taxcy                 0.199   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+    SLICE_X10Y24.CIN     net (fanout=1)        0.082   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<3>
+    SLICE_X10Y24.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X10Y25.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<7>
+    SLICE_X10Y25.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X10Y26.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<11>
+    SLICE_X10Y26.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X10Y27.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<15>
+    SLICE_X10Y27.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X10Y28.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<19>
+    SLICE_X10Y28.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X10Y29.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<23>
+    SLICE_X10Y29.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X10Y30.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<27>
+    SLICE_X10Y30.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X10Y31.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<31>
+    SLICE_X10Y31.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X10Y32.CIN     net (fanout=1)        0.108   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<35>
+    SLICE_X10Y32.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X10Y33.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<39>
+    SLICE_X10Y33.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X10Y34.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<43>
+    SLICE_X10Y34.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X10Y35.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<47>
+    SLICE_X10Y35.COUT    Tbyp                  0.076   encr/P_reg<11>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X10Y36.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<51>
+    SLICE_X10Y36.COUT    Tbyp                  0.076   encr/P_reg<39>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X10Y37.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<55>
+    SLICE_X10Y37.COUT    Tbyp                  0.076   encr/P_reg<43>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X10Y38.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<59>
+    SLICE_X10Y38.COUT    Tbyp                  0.076   encr/P_reg<63>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X10Y39.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<63>
+    SLICE_X10Y39.COUT    Tbyp                  0.076   encr/P_reg<67>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X10Y40.CIN     net (fanout=1)        0.082   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<67>
+    SLICE_X10Y40.COUT    Tbyp                  0.076   encr/P_reg<75>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X10Y41.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<71>
+    SLICE_X10Y41.COUT    Tbyp                  0.076   encr/P_reg<79>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X10Y42.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<75>
+    SLICE_X10Y42.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X10Y43.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<79>
+    SLICE_X10Y43.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X10Y44.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<83>
+    SLICE_X10Y44.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X10Y45.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<87>
+    SLICE_X10Y45.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X10Y46.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<91>
+    SLICE_X10Y46.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X10Y47.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<95>
+    SLICE_X10Y47.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X10Y48.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<99>
+    SLICE_X10Y48.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X10Y49.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<103>
+    SLICE_X10Y49.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X10Y50.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<107>
+    SLICE_X10Y50.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X10Y51.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<111>
+    SLICE_X10Y51.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X10Y52.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<115>
+    SLICE_X10Y52.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X10Y53.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<119>
+    SLICE_X10Y53.COUT    Tbyp                  0.076   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X10Y54.CIN     net (fanout=1)        0.003   encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_cy<123>
+    SLICE_X10Y54.DMUX    Tcind                 0.302   encr/MontProd0/S_reg[127]_M[127]_sub_23_OUT<127>
+                                                       encr/MontProd0/Msub_S_reg[127]_M[127]_sub_23_OUT_xor<127>
+    SLICE_X16Y47.A5      net (fanout=1)        0.862   encr/MontProd0/S_reg[127]_M[127]_sub_23_OUT<127>
+    SLICE_X16Y47.CLK     Tas                   0.341   encr/B1_reg<8>
+                                                       encr/MontProd0/current_state[5]_GND_7_o_select_32_OUT<1>1
+                                                       encr/MontProd0/S_127
+    -------------------------------------------------  ---------------------------
+    Total                                      5.405ns (3.530ns logic, 1.875ns route)
+                                                       (65.3% logic, 34.7% route)
+
+--------------------------------------------------------------------------------
+
+Hold Paths: TS_sysclk = PERIOD TIMEGRP "sysclk" TS_sys_clk_pin * 1.75 HIGH 50%;
+--------------------------------------------------------------------------------
+
+Paths for end point mem/RESULT_4 (SLICE_X23Y22.SR), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      0.350ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               stim/RESET (FF)
+  Destination:          mem/RESULT_4 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      0.350ns (Levels of Logic = 0)
+  Clock Path Skew:      0.000ns
+  Source Clock:         sysclk_BUFG rising at 5.714ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: stim/RESET to mem/RESULT_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X23Y21.AQ      Tcko                  0.198   stim/RESET
+                                                       stim/RESET
+    SLICE_X23Y22.SR      net (fanout=7)        0.283   stim/RESET
+    SLICE_X23Y22.CLK     Tcksr       (-Th)     0.131   mem/RESULT<7>
+                                                       mem/RESULT_4
+    -------------------------------------------------  ---------------------------
+    Total                                      0.350ns (0.067ns logic, 0.283ns route)
+                                                       (19.1% logic, 80.9% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point mem/RESULT_5 (SLICE_X23Y22.SR), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      0.353ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               stim/RESET (FF)
+  Destination:          mem/RESULT_5 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      0.353ns (Levels of Logic = 0)
+  Clock Path Skew:      0.000ns
+  Source Clock:         sysclk_BUFG rising at 5.714ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: stim/RESET to mem/RESULT_5
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X23Y21.AQ      Tcko                  0.198   stim/RESET
+                                                       stim/RESET
+    SLICE_X23Y22.SR      net (fanout=7)        0.283   stim/RESET
+    SLICE_X23Y22.CLK     Tcksr       (-Th)     0.128   mem/RESULT<7>
+                                                       mem/RESULT_5
+    -------------------------------------------------  ---------------------------
+    Total                                      0.353ns (0.070ns logic, 0.283ns route)
+                                                       (19.8% logic, 80.2% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point mem/RESULT_7 (SLICE_X23Y22.SR), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      0.354ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               stim/RESET (FF)
+  Destination:          mem/RESULT_7 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      0.354ns (Levels of Logic = 0)
+  Clock Path Skew:      0.000ns
+  Source Clock:         sysclk_BUFG rising at 5.714ns
+  Destination Clock:    sysclk_BUFG rising at 5.714ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: stim/RESET to mem/RESULT_7
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X23Y21.AQ      Tcko                  0.198   stim/RESET
+                                                       stim/RESET
+    SLICE_X23Y22.SR      net (fanout=7)        0.283   stim/RESET
+    SLICE_X23Y22.CLK     Tcksr       (-Th)     0.127   mem/RESULT<7>
+                                                       mem/RESULT_7
+    -------------------------------------------------  ---------------------------
+    Total                                      0.354ns (0.071ns logic, 0.283ns route)
+                                                       (20.1% logic, 79.9% route)
+
+--------------------------------------------------------------------------------
+
+Component Switching Limit Checks: TS_sysclk = PERIOD TIMEGRP "sysclk" TS_sys_clk_pin * 1.75 HIGH 50%;
+--------------------------------------------------------------------------------
+Slack: 3.984ns (period - min period limit)
+  Period: 5.714ns
+  Min period limit: 1.730ns (578.035MHz) (Tbcper_I)
+  Physical resource: sysclk_BUFG/I0
+  Logical resource: sysclk_BUFG/I0
+  Location pin: BUFGMUX_X3Y13.I0
+  Clock network: sysclk
+--------------------------------------------------------------------------------
+Slack: 4.075ns (period - min period limit)
+  Period: 5.714ns
+  Min period limit: 1.639ns (610.128MHz) (Tockper)
+  Physical resource: SSB/seg<0>/CLK0
+  Logical resource: SSB/seg_0/CK0
+  Location pin: OLOGIC_X18Y13.CLK0
+  Clock network: sysclk_BUFG
+--------------------------------------------------------------------------------
+Slack: 4.075ns (period - min period limit)
+  Period: 5.714ns
+  Min period limit: 1.639ns (610.128MHz) (Tockper)
+  Physical resource: SSB/seg<1>/CLK0
+  Logical resource: SSB/seg_1/CK0
+  Location pin: OLOGIC_X18Y12.CLK0
+  Clock network: sysclk_BUFG
+--------------------------------------------------------------------------------
+
+
+Derived Constraint Report
+Derived Constraints for TS_sys_clk_pin
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_sys_clk_pin                 |     10.000ns|      5.340ns|      9.954ns|            0|            0|            0|       248035|
+| TS_sysclk                     |      5.714ns|      5.688ns|          N/A|            0|            0|       248035|            0|
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+All constraints were met.
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Clock to Setup on destination clock clk100
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk100         |    5.688|         |         |         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
+
+Constraints cover 248035 paths, 0 nets, and 15103 connections
+
+Design statistics:
+   Minimum period:   5.688ns{1}   (Maximum frequency: 175.809MHz)
+
+
+------------------------------------Footnotes-----------------------------------
+1)  The minimum period statistic assumes all single cycle delays.
+
+Analysis completed Tue Nov 27 17:23:47 2012 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 279 MB
+
+
+

@@ -1,0 +1,15 @@
+# Output products list for <mod_ip_core>
+demo_tb\tb_mod_ip_core.vhd
+mod_ip_core.asy
+mod_ip_core.gise
+mod_ip_core.ngc
+mod_ip_core.sym
+mod_ip_core.v
+mod_ip_core.veo
+mod_ip_core.xco
+mod_ip_core.xise
+mod_ip_core\doc\div_gen_v4_0_readme.txt
+mod_ip_core\doc\div_gen_v4_0_vinfo.html
+mod_ip_core\doc\ds819_div_gen.pdf
+mod_ip_core_flist.txt
+mod_ip_core_xmdf.tcl

@@ -1,0 +1,49 @@
+
+
+			 ;------------------------------------------------------------------------------------------
+              ; Assign Scratch Pad Memory Locations
+              ;------------------------------------------------------------------------------------------
+              ;
+			 CONSTANT	MX		,	01
+			 CONSTANT	MY		,	02
+			 CONSTANT	X1		,	03
+			 CONSTANT	Y1		,	04
+			 CONSTANT	X2		,	05
+			 CONSTANT	Y2		,	06
+			 CONSTANT	PIXELS	,	07
+			 CONSTANT	CONFIDENCE,	08
+			 CONSTANT	TURNCOUNT,	09
+			 CONSTANT	search_count,	0A
+			  
+              CONSTANT CURRENT_PHI, 21          ; store current turn angle (phi) of servo 1, NORMALIZED TO 0-127 RANGE
+              CONSTANT MOTOR_0_SPEED, 22
+              CONSTANT MOTOR_1_SPEED, 23
+              CONSTANT MOTOR_2_SPEED, 24
+              CONSTANT MOTOR_3_SPEED, 25
+              ;
+              ;------------------------------------------------------------------------------------------
+              ; port declaration
+              ;------------------------------------------------------------------------------------------
+              ;
+			  ;	SENSOR
+			  CONSTANT sensor_port, 05
+              ; MOTOR
+              ;
+              CONSTANT motor_port, 20           ; (o) write to motor controller
+              ;
+              ; SERVO
+              ;
+              CONSTANT servo_port, 10           ; (o) write to servo controller
+              ;
+              ; UART
+              ;
+              CONSTANT reset_UART_port, 01      ; (o) Reset UART buffers (Constant Optimised Port)
+              CONSTANT UART_status_port, 00     ; (i) Read status
+              CONSTANT UART_TX6_output_port, 01 ; (o) Write data to UART_TX6
+              CONSTANT UART_RX6_input_port, 01  ; (i) Read data from UART_RX6
+              ;
+              ; LED
+              ;
+              CONSTANT OPORT_led, 40            ; (o) output to on-board leds
+              CONSTANT IPORT_btn, 04            ; (i) debounced pushbuttons
+              CONSTANT IPORT_sw, 03             ; (i) debounced switches

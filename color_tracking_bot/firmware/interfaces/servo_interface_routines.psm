@@ -1,0 +1,109 @@
+                      ;------------------------------------------------------------------------------------------
+                      ; Pan/tilt servo driver
+                      ; Copyright by Dung Le, 2012
+                      ;------------------------------------------------------------------------------------------
+                      ; Definition: simple routines for controlling servo. This driver incoporates with
+                      ; the hdl design in servo_controller.v. Currently support both continuous (full) rotation
+                      ; servo and normal (0-180 degree) servo.
+                      ;
+                      ; NOTE:
+                      ; - Servo control register definition:
+                      ;   + bit [5-0]: speed, 64 steps
+                      ;   + bit 6: direction bit
+                      ;   + bit 7: servo select bit
+                      ; - The output pulse width from servo_controller unit are 0.5 - 2.5 ms for normal
+                      ;   servo, 1 - 2 ms for full rotation servo. PWM period is 16ms (fpga board run at 10MHZ)
+                      ;
+                      ;------------------------------------------------------------------------------------------
+                      ; CONSTANTS
+                      ;------------------------------------------------------------------------------------------
+                      ;
+                      CONSTANT MAX_SPEED, 3F
+                      CONSTANT MAX_PHI, 7F
+                      CONSTANT CENTER_POSITION, 3F
+                      CONSTANT DIRECTION_BIT, 40
+                      CONSTANT SERVO_SELECT_BIT, 80
+                      ;
+                      ;------------------------------------------------------------------------------------------
+                      ; SERVO ROUTINES
+                      ;------------------------------------------------------------------------------------------
+                      ;
+                      ; USAGE:
+                      ; - set up desired speed on s3
+                      ; - call the appropriate routine for your need
+                      ;
+                      ; Registers used: s1,s2,s3
+                      ;   s3 - input (speed), 6-bit (max 64 steps)
+                      ;   s1,s2 - output regs
+                      ;------------------------------------------------------------------------------------------
+          servo_init: 
+                      LOAD s3, CENTER_POSITION      ; center position - 90 deg
+                      STORE s3, CURRENT_PHI
+                      LOAD s3, 00
+                      LOAD s2, 00
+                      LOAD s1, 00
+					  CALL	servo_0_turn_right
+                      RETURN 
+                      ;------------------------------------------------------------------------------------------
+                      ; servo 0 is continuous rotation servo
+                      ;------------------------------------------------------------------------------------------
+  servo_0_turn_right: 
+                      COMPARE s3, MAX_SPEED
+                      RETURN NC                     ; return if speed greater than upper bound
+                      OUTPUT s3, servo_port
+                      RETURN 
+                      ;
+                      ;
+                      ;
+   servo_0_turn_left: 
+                      COMPARE s3, MAX_SPEED
+                      RETURN NC                     ; return if speed greater than upper bound
+                      LOAD s1, s3
+                      ADD s1, 40
+                      OUTPUT s1, servo_port
+                      RETURN 
+                      ;------------------------------------------------------------------------------------------
+                      ; servo 1 is normal 0-180 rotation servo
+                      ;------------------------------------------------------------------------------------------
+     servo_1_turn_up: 
+                      COMPARE s3, MAX_SPEED
+                      RETURN NC                     ; return if turn angle >= upper bound
+                      FETCH s1, CURRENT_PHI         ; current phi from memory
+                      ADD s1, s3                    ; current_phi = current_phi + turn angle
+                      COMPARE s1, MAX_PHI           ; check if current_phi < MAX_PHI
+                      JUMP C, calculate_turn_angle  ; yes, no need to fixup, jump
+                      LOAD s1, MAX_PHI              ; else set current phi to MAX_PHI - 1
+                      SUB s1, 01
+                      JUMP calculate_turn_angle
+                      ;
+                      ;
+                      ;
+   servo_1_turn_down: 
+                      COMPARE s3, MAX_SPEED
+                      RETURN NC                     ; return if turn angle >= upper bound
+                      FETCH s1, CURRENT_PHI         ; current phi from memory
+                      SUB s1, s3                    ; current_phi = current_phi - turn angle
+                      JUMP NC, calculate_turn_angle ; jump if current_phi >= 0
+                      LOAD s1, 00                   ; else set current phi to 0
+                      JUMP calculate_turn_angle
+                      ;------------------------------------------------------------------------------------------
+                      ; This section below is used by both above routines
+                      ;------------------------------------------------------------------------------------------
+calculate_turn_angle: 
+                      STORE s1, CURRENT_PHI         ; save current_phi for later use
+                      ;
+                      ; now determine the bits that will be send out
+                      ;
+                      COMPARE s1, CENTER_POSITION   ; check if current_phi < CENTER_POSITION
+                      JUMP NC, servo_1_label2       ; no, jump
+                      LOAD s2, CENTER_POSITION      ;
+                      SUB s2, s1                    ; output phi = CENTER_POSITION - currentphi
+                      LOAD s1, s2
+                      JUMP servo_1_label3
+      servo_1_label2: 
+                      SUB s1, CENTER_POSITION       ; else, output phi = current phi - CENTER_POSITION
+                      ADD s1, DIRECTION_BIT         ; when current phi > CENTER_POSITION, must set DIRECTION BIT
+      servo_1_label3: 
+                      ADD s1, SERVO_SELECT_BIT      ; when use servo 1, must set SELECTION BIT
+                      OUTPUT s1, servo_port         ; write to controller
+                      RETURN 

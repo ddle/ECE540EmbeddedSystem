@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<DesignStrategy goal="Area Reduction" strategy="strategy2" version="12.1">
+
+  <Description>This area reduction strategy will maximize the amount of LUT reduction.</Description>
+
+  <DeviceList devices="spartan6"/>
+
+  <Properties>
+    <property name="Synthesize - XST:Optimization Goal" value="Area"/>
+    <property name="Synthesize - XST:Optimization Effort" value="Normal"/>
+    <property name="Synthesize - XST:Automatic BRAM Packing" value="true"/>
+    <property name="Synthesize - XST:Max Fanout" value="100000"/>
+    <property name="Synthesize - XST:Register Balancing" value="No"/>
+    <property name="Synthesize - XST:Pack I/O Registers into IOBs" value="Yes"/>
+    <property name="Synthesize - XST:LUT Combining" value="Area"/>
+    <property name="Map:Placer Effort Level" value="High"/>
+    <property name="Map:Pack I/O Registers/Latches into IOBs" value="For Inputs and Outputs"/>
+    <property name="Map:LUT Combining" value="Area"/>
+    <property name="Place &amp; Route:Place And Route Mode" value="Route Only"/>
+    <property name="Place &amp; Route:Place &amp; Route Effort Level (Overall)" value="High"/>
+  </Properties>
+
+</DesignStrategy>

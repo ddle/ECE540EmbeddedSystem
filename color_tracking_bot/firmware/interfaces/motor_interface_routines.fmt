@@ -1,0 +1,124 @@
+                 ;------------------------------------------------------------------------------------------
+                 ; Pan/tilt servo driver
+                 ; Copyright by Dung Le, 2012
+                 ;------------------------------------------------------------------------------------------
+                 ; Definition: simple routines for interface with standard motor controller board.
+                 ; This driver incoporates with the hdl design in motor_controller.v
+                 ;
+                 ;
+                 ; NOTE:
+                 ; - Control register definition:
+                 ;   + bit [4-0]: speed, 32 steps
+                 ;   + bit 5: direction bit
+                 ;   + bit [7:6]: motor select bit
+                 ; - The PWM period is 0.8ms (fpga board run at 100MHZ)
+                 ;
+                 ;------------------------------------------------------------------------------------------
+                 ; CONSTANTS
+                 ;------------------------------------------------------------------------------------------
+                 ;
+                 CONSTANT MOTOR_MAX_SPEED, 1F
+                 ;
+                 ;
+                 ;------------------------------------------------------------------------------------------
+                 ; MOTOR ROUTINES
+                 ;------------------------------------------------------------------------------------------
+                 ;
+                 ; USAGE:
+                 ; - set up desired speed on s3
+                 ; - call the appropriate routine for your need
+                 ;
+                 ;
+                 ; Registers used: s1,s2,s3
+                 ;   s3 - input (speed), 6-bit (max 64 steps)
+                 ;   s1,s2 - output regs
+                 ;------------------------------------------------------------------------------------------
+     motor_init: 
+                 LOAD s3, 00
+                 CALL motor_0_forward
+                 CALL delay_1ms
+                 LOAD s3, 00
+                 CALL motor_1_forward
+                 CALL delay_1ms
+                 LOAD s3, 00
+                 CALL motor_2_forward
+                 CALL delay_1ms
+                 LOAD s3, 00
+                 CALL motor_3_forward
+                 STORE s3, MOTOR_0_SPEED
+                 STORE s3, MOTOR_1_SPEED
+                 STORE s3, MOTOR_2_SPEED
+                 STORE s3, MOTOR_3_SPEED
+                 RETURN 
+                 ;------------------------------------------------------------------------------------------
+                 ; servo 0 is continuous rotation servo
+                 ;------------------------------------------------------------------------------------------
+motor_0_forward: 
+                 COMPARE s3, MOTOR_MAX_SPEED
+                 RETURN NC                    ; return if speed greater than upper bound
+                 OUTPUT s3, motor_port
+                 RETURN 
+                 ;
+                 ;
+                 ;
+motor_0_reverse: 
+                 COMPARE s3, MOTOR_MAX_SPEED
+                 RETURN NC                    ; return if speed greater than upper bound
+                 LOAD s1, s3
+                 ADD s1, 20                   ; set reverse bit
+                 OUTPUT s1, motor_port
+                 RETURN 
+motor_1_forward: 
+                 COMPARE s3, MOTOR_MAX_SPEED
+                 RETURN NC                    ; return if speed greater than upper bound
+                 LOAD s1, s3
+                 ADD s1, 40                   ; select motor 1
+                 OUTPUT s1, motor_port
+                 RETURN 
+                 ;
+                 ;
+                 ;
+motor_1_reverse: 
+                 COMPARE s3, MOTOR_MAX_SPEED
+                 RETURN NC                    ; return if speed greater than upper bound
+                 LOAD s1, s3
+                 ADD s1, 20                   ; set reverse bit
+                 ADD s1, 40                   ; select motor 1
+                 OUTPUT s1, motor_port
+                 RETURN 
+motor_2_forward: 
+                 COMPARE s3, MOTOR_MAX_SPEED
+                 RETURN NC                    ; return if speed greater than upper bound
+                 LOAD s1, s3
+                 ADD s1, 80                   ; select motor 2
+                 OUTPUT s1, motor_port
+                 RETURN 
+                 ;
+                 ;
+                 ;
+motor_2_reverse: 
+                 COMPARE s3, MOTOR_MAX_SPEED
+                 RETURN NC                    ; return if speed greater than upper bound
+                 LOAD s1, s3
+                 ADD s1, 80                   ; select motor 2
+                 ADD s1, 20                   ; set reverse bit
+                 OUTPUT s1, motor_port
+                 RETURN 
+motor_3_forward: 
+                 COMPARE s3, MOTOR_MAX_SPEED
+                 RETURN NC                    ; return if speed greater than upper bound
+                 LOAD s1, s3
+                 ADD s1, C0                   ; select motor 3
+                 OUTPUT s1, motor_port
+                 RETURN 
+                 ;
+                 ;
+                 ;
+motor_3_reverse: 
+                 COMPARE s3, MOTOR_MAX_SPEED
+                 RETURN NC                    ; return if speed greater than upper bound
+                 LOAD s1, s3
+                 ADD s1, 20                   ; set reverse bit
+                 ADD s1, C0                   ; select motor
+                 OUTPUT s1, motor_port
+                 RETURN 

@@ -1,0 +1,15 @@
+; THRESHHOLDS 
+CONSTANT	LM_THRESH	,	32	;				left base 
+CONSTANT	LEFT_FAST	,	3D	;	80 - 19		left fast servo
+CONSTANT	LEFT_SLOW	,	48	;	80 - 8		left slow servo
+;			CENTER
+CONSTANT	RIGHT_SLOW	,	58	;  	80 + 8		right slow servo
+CONSTANT	RIGHT_FAST	,	63	;	80 + 19		right fast servo
+CONSTANT	RM_THRESH	,	6E	;				right base
+CONSTANT	UC_THRESH	,	32	;				servo up
+CONSTANT	DC_THRESH	,	46  ;				servo down
+CONSTANT	CONF_THRESH	,	14  ;				min confidence
+CONSTANT	PIX_THRESH	,	01  ;				min pixels
+CONSTANT	FM_THRESH	,	03  ;				forward move thresh
+CONSTANT	BM_THRESH	, 	05 ;				back move thresh
+CONSTANT	NOISE_THRESH,	03		

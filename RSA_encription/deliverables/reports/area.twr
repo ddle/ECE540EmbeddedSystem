@@ -1,0 +1,967 @@
+--------------------------------------------------------------------------------
+Release 14.2 Trace  (nt64)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+
+C:\Xilinx\14.2\ISE_DS\ISE\bin\nt64\unwrapped\trce.exe -intstyle ise -v 3 -s 3
+-n 3 -fastpaths -xml s6efpga.twx s6efpga.ncd -o s6efpga.twr s6efpga.pcf
+
+Design file:              s6efpga.ncd
+Physical constraint file: s6efpga.pcf
+Device,package,speed:     xc6slx16,csg324,C,-3 (PRODUCTION 1.22 2012-07-09)
+Report level:             verbose report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:3412 - To improve timing, see the Timing Closure User Guide (UG612).
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+
+================================================================================
+Timing constraint: TS_sys_clk_pin = PERIOD TIMEGRP "sys_clk_pin" 100 MHz HIGH 
+50%;
+For more information, see Period Analysis in the Timing Closure User Guide (UG612).
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   5.340ns.
+--------------------------------------------------------------------------------
+
+Component Switching Limit Checks: TS_sys_clk_pin = PERIOD TIMEGRP "sys_clk_pin" 100 MHz HIGH 50%;
+--------------------------------------------------------------------------------
+Slack: 4.660ns (period - (min low pulse limit / (low pulse / period)))
+  Period: 10.000ns
+  Low pulse: 5.000ns
+  Low pulse limit: 2.670ns (Tdcmpw_CLKIN_100_150)
+  Physical resource: DCM/CLKIN
+  Logical resource: DCM/CLKIN
+  Location pin: DCM_X0Y1.CLKIN
+  Clock network: DCM_ML_NEW_DIVCLK
+--------------------------------------------------------------------------------
+Slack: 4.660ns (period - (min high pulse limit / (high pulse / period)))
+  Period: 10.000ns
+  High pulse: 5.000ns
+  High pulse limit: 2.670ns (Tdcmpw_CLKIN_100_150)
+  Physical resource: DCM/CLKIN
+  Logical resource: DCM/CLKIN
+  Location pin: DCM_X0Y1.CLKIN
+  Clock network: DCM_ML_NEW_DIVCLK
+--------------------------------------------------------------------------------
+Slack: 6.430ns (period - min period limit)
+  Period: 10.000ns
+  Min period limit: 3.570ns (280.112MHz) (Tdcmper_CLKIN)
+  Physical resource: DCM/CLKIN
+  Logical resource: DCM/CLKIN
+  Location pin: DCM_X0Y1.CLKIN
+  Clock network: DCM_ML_NEW_DIVCLK
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_sysclk = PERIOD TIMEGRP "sysclk" TS_sys_clk_pin HIGH 50%;
+For more information, see Period Analysis in the Timing Closure User Guide (UG612).
+
+ 352690 paths analyzed, 10901 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   9.023ns.
+--------------------------------------------------------------------------------
+
+Paths for end point encr/MontProd1/S_2 (SLICE_X23Y12.C1), 197 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     0.977ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_11 (FF)
+  Destination:          encr/MontProd1/S_2 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.782ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.006ns (0.253 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_11 to encr/MontProd1/S_2
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.DQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_11
+    SLICE_X28Y20.B4      net (fanout=8)        1.179   encr/MontProd1/S_reg<11>
+    SLICE_X28Y20.COUT    Topcyb                0.375   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<5>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.BMUX    Tilo                  0.313   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>21
+    SLICE_X23Y12.C1      net (fanout=128)      3.429   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>2
+    SLICE_X23Y12.CLK     Tas                   0.322   encr/MontProd1/S<3>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<126>1
+                                                       encr/MontProd1/S_2
+    -------------------------------------------------  ---------------------------
+    Total                                      8.782ns (2.724ns logic, 6.058ns route)
+                                                       (31.0% logic, 69.0% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     1.010ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_8 (FF)
+  Destination:          encr/MontProd1/S_2 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.749ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.006ns (0.253 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_8 to encr/MontProd1/S_2
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.AQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_8
+    SLICE_X28Y20.A4      net (fanout=8)        1.126   encr/MontProd1/S_reg<8>
+    SLICE_X28Y20.COUT    Topcya                0.395   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<4>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.BMUX    Tilo                  0.313   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>21
+    SLICE_X23Y12.C1      net (fanout=128)      3.429   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>2
+    SLICE_X23Y12.CLK     Tas                   0.322   encr/MontProd1/S<3>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<126>1
+                                                       encr/MontProd1/S_2
+    -------------------------------------------------  ---------------------------
+    Total                                      8.749ns (2.744ns logic, 6.005ns route)
+                                                       (31.4% logic, 68.6% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     1.058ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_10 (FF)
+  Destination:          encr/MontProd1/S_2 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.701ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.006ns (0.253 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_10 to encr/MontProd1/S_2
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.CQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_10
+    SLICE_X28Y20.B5      net (fanout=8)        1.098   encr/MontProd1/S_reg<10>
+    SLICE_X28Y20.COUT    Topcyb                0.375   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<5>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.BMUX    Tilo                  0.313   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>21
+    SLICE_X23Y12.C1      net (fanout=128)      3.429   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>2
+    SLICE_X23Y12.CLK     Tas                   0.322   encr/MontProd1/S<3>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<126>1
+                                                       encr/MontProd1/S_2
+    -------------------------------------------------  ---------------------------
+    Total                                      8.701ns (2.724ns logic, 5.977ns route)
+                                                       (31.3% logic, 68.7% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point encr/MontProd1/S_7 (SLICE_X23Y13.D2), 197 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     0.998ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_11 (FF)
+  Destination:          encr/MontProd1/S_7 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.763ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.004ns (0.255 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_11 to encr/MontProd1/S_7
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.DQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_11
+    SLICE_X28Y20.B4      net (fanout=8)        1.179   encr/MontProd1/S_reg<11>
+    SLICE_X28Y20.COUT    Topcyb                0.375   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<5>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.BMUX    Tilo                  0.313   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>21
+    SLICE_X23Y13.D2      net (fanout=128)      3.410   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>2
+    SLICE_X23Y13.CLK     Tas                   0.322   encr/MontProd1/S<7>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<121>1
+                                                       encr/MontProd1/S_7
+    -------------------------------------------------  ---------------------------
+    Total                                      8.763ns (2.724ns logic, 6.039ns route)
+                                                       (31.1% logic, 68.9% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     1.031ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_8 (FF)
+  Destination:          encr/MontProd1/S_7 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.730ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.004ns (0.255 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_8 to encr/MontProd1/S_7
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.AQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_8
+    SLICE_X28Y20.A4      net (fanout=8)        1.126   encr/MontProd1/S_reg<8>
+    SLICE_X28Y20.COUT    Topcya                0.395   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<4>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.BMUX    Tilo                  0.313   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>21
+    SLICE_X23Y13.D2      net (fanout=128)      3.410   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>2
+    SLICE_X23Y13.CLK     Tas                   0.322   encr/MontProd1/S<7>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<121>1
+                                                       encr/MontProd1/S_7
+    -------------------------------------------------  ---------------------------
+    Total                                      8.730ns (2.744ns logic, 5.986ns route)
+                                                       (31.4% logic, 68.6% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     1.079ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_10 (FF)
+  Destination:          encr/MontProd1/S_7 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.682ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.004ns (0.255 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_10 to encr/MontProd1/S_7
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.CQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_10
+    SLICE_X28Y20.B5      net (fanout=8)        1.098   encr/MontProd1/S_reg<10>
+    SLICE_X28Y20.COUT    Topcyb                0.375   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<5>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.BMUX    Tilo                  0.313   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>21
+    SLICE_X23Y13.D2      net (fanout=128)      3.410   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>2
+    SLICE_X23Y13.CLK     Tas                   0.322   encr/MontProd1/S<7>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<121>1
+                                                       encr/MontProd1/S_7
+    -------------------------------------------------  ---------------------------
+    Total                                      8.682ns (2.724ns logic, 5.958ns route)
+                                                       (31.4% logic, 68.6% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point encr/MontProd1/S_5 (SLICE_X23Y13.B2), 197 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     1.044ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_11 (FF)
+  Destination:          encr/MontProd1/S_5 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.717ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.004ns (0.255 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_11 to encr/MontProd1/S_5
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.DQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_11
+    SLICE_X28Y20.B4      net (fanout=8)        1.179   encr/MontProd1/S_reg<11>
+    SLICE_X28Y20.COUT    Topcyb                0.375   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<5>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B       Tilo                  0.259   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>31
+    SLICE_X23Y13.B2      net (fanout=128)      3.418   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>3
+    SLICE_X23Y13.CLK     Tas                   0.322   encr/MontProd1/S<7>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<123>1
+                                                       encr/MontProd1/S_5
+    -------------------------------------------------  ---------------------------
+    Total                                      8.717ns (2.670ns logic, 6.047ns route)
+                                                       (30.6% logic, 69.4% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     1.077ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_8 (FF)
+  Destination:          encr/MontProd1/S_5 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.684ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.004ns (0.255 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_8 to encr/MontProd1/S_5
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.AQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_8
+    SLICE_X28Y20.A4      net (fanout=8)        1.126   encr/MontProd1/S_reg<8>
+    SLICE_X28Y20.COUT    Topcya                0.395   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<4>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B       Tilo                  0.259   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>31
+    SLICE_X23Y13.B2      net (fanout=128)      3.418   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>3
+    SLICE_X23Y13.CLK     Tas                   0.322   encr/MontProd1/S<7>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<123>1
+                                                       encr/MontProd1/S_5
+    -------------------------------------------------  ---------------------------
+    Total                                      8.684ns (2.690ns logic, 5.994ns route)
+                                                       (31.0% logic, 69.0% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     1.125ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               encr/MontProd1/S_reg_10 (FF)
+  Destination:          encr/MontProd1/S_5 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      8.636ns (Levels of Logic = 17)
+  Clock Path Skew:      -0.004ns (0.255 - 0.259)
+  Source Clock:         sysclk_BUFG rising at 0.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.235ns
+
+  Clock Uncertainty:          0.235ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.400ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: encr/MontProd1/S_reg_10 to encr/MontProd1/S_5
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X18Y14.CQ      Tcko                  0.447   encr/MontProd1/S_reg<11>
+                                                       encr/MontProd1/S_reg_10
+    SLICE_X28Y20.B5      net (fanout=8)        1.098   encr/MontProd1/S_reg<10>
+    SLICE_X28Y20.COUT    Topcyb                0.375   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_lut<5>1
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<7>
+    SLICE_X28Y21.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<11>
+    SLICE_X28Y22.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<15>
+    SLICE_X28Y23.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.CIN     net (fanout=1)        0.082   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<19>
+    SLICE_X28Y24.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<23>
+    SLICE_X28Y25.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<27>
+    SLICE_X28Y26.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<31>
+    SLICE_X28Y27.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<35>
+    SLICE_X28Y28.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<39>
+    SLICE_X28Y29.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<43>
+    SLICE_X28Y30.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<47>
+    SLICE_X28Y31.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.CIN     net (fanout=1)        0.108   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<51>
+    SLICE_X28Y32.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<55>
+    SLICE_X28Y33.COUT    Tbyp                  0.076   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CIN     net (fanout=1)        0.003   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<59>
+    SLICE_X28Y34.CMUX    Tcinc                 0.279   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+                                                       encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B4      net (fanout=1)        1.224   encr/MontProd1/Mcompar_M[127]_S_reg[127]_LessThan_22_o_cy<62>
+    SLICE_X23Y42.B       Tilo                  0.259   encr/MontProd1/S<125>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>31
+    SLICE_X23Y13.B2      net (fanout=128)      3.418   encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<100>3
+    SLICE_X23Y13.CLK     Tas                   0.322   encr/MontProd1/S<7>
+                                                       encr/MontProd1/current_state[5]_GND_7_o_select_32_OUT<123>1
+                                                       encr/MontProd1/S_5
+    -------------------------------------------------  ---------------------------
+    Total                                      8.636ns (2.670ns logic, 5.966ns route)
+                                                       (30.9% logic, 69.1% route)
+
+--------------------------------------------------------------------------------
+
+Hold Paths: TS_sysclk = PERIOD TIMEGRP "sysclk" TS_sys_clk_pin HIGH 50%;
+--------------------------------------------------------------------------------
+
+Paths for end point mem/Mshreg_DONE (SLICE_X18Y20.AI), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      0.254ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               encr/done (FF)
+  Destination:          mem/Mshreg_DONE (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      0.256ns (Levels of Logic = 0)
+  Clock Path Skew:      0.002ns (0.040 - 0.038)
+  Source Clock:         sysclk_BUFG rising at 10.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: encr/done to mem/Mshreg_DONE
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X19Y20.AQ      Tcko                  0.198   encr/done
+                                                       encr/done
+    SLICE_X18Y20.AI      net (fanout=3)        0.028   encr/done
+    SLICE_X18Y20.CLK     Tdh         (-Th)    -0.030   mem/DONE
+                                                       mem/Mshreg_DONE
+    -------------------------------------------------  ---------------------------
+    Total                                      0.256ns (0.228ns logic, 0.028ns route)
+                                                       (89.1% logic, 10.9% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point DB/shift_pb1_4 (SLICE_X16Y45.DX), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      0.379ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               DB/shift_pb1_3 (FF)
+  Destination:          DB/shift_pb1_4 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      0.379ns (Levels of Logic = 0)
+  Clock Path Skew:      0.000ns
+  Source Clock:         sysclk_BUFG rising at 10.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: DB/shift_pb1_3 to DB/shift_pb1_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X16Y45.CQ      Tcko                  0.200   DB/shift_pb1<4>
+                                                       DB/shift_pb1_3
+    SLICE_X16Y45.DX      net (fanout=2)        0.131   DB/shift_pb1<3>
+    SLICE_X16Y45.CLK     Tckdi       (-Th)    -0.048   DB/shift_pb1<4>
+                                                       DB/shift_pb1_4
+    -------------------------------------------------  ---------------------------
+    Total                                      0.379ns (0.248ns logic, 0.131ns route)
+                                                       (65.4% logic, 34.6% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point DB/shift_pb0_4 (SLICE_X17Y46.DX), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      0.393ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               DB/shift_pb0_3 (FF)
+  Destination:          DB/shift_pb0_4 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      0.393ns (Levels of Logic = 0)
+  Clock Path Skew:      0.000ns
+  Source Clock:         sysclk_BUFG rising at 10.000ns
+  Destination Clock:    sysclk_BUFG rising at 10.000ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: DB/shift_pb0_3 to DB/shift_pb0_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X17Y46.CQ      Tcko                  0.198   DB/shift_pb0<4>
+                                                       DB/shift_pb0_3
+    SLICE_X17Y46.DX      net (fanout=2)        0.136   DB/shift_pb0<3>
+    SLICE_X17Y46.CLK     Tckdi       (-Th)    -0.059   DB/shift_pb0<4>
+                                                       DB/shift_pb0_4
+    -------------------------------------------------  ---------------------------
+    Total                                      0.393ns (0.257ns logic, 0.136ns route)
+                                                       (65.4% logic, 34.6% route)
+
+--------------------------------------------------------------------------------
+
+Component Switching Limit Checks: TS_sysclk = PERIOD TIMEGRP "sysclk" TS_sys_clk_pin HIGH 50%;
+--------------------------------------------------------------------------------
+Slack: 8.270ns (period - min period limit)
+  Period: 10.000ns
+  Min period limit: 1.730ns (578.035MHz) (Tbcper_I)
+  Physical resource: sysclk_BUFG/I0
+  Logical resource: sysclk_BUFG/I0
+  Location pin: BUFGMUX_X3Y13.I0
+  Clock network: sysclk
+--------------------------------------------------------------------------------
+Slack: 8.361ns (period - min period limit)
+  Period: 10.000ns
+  Min period limit: 1.639ns (610.128MHz) (Tockper)
+  Physical resource: SSB/seg<0>/CLK0
+  Logical resource: SSB/seg_0/CK0
+  Location pin: OLOGIC_X18Y13.CLK0
+  Clock network: sysclk_BUFG
+--------------------------------------------------------------------------------
+Slack: 8.361ns (period - min period limit)
+  Period: 10.000ns
+  Min period limit: 1.639ns (610.128MHz) (Tockper)
+  Physical resource: SSB/seg<1>/CLK0
+  Logical resource: SSB/seg_1/CK0
+  Location pin: OLOGIC_X18Y12.CLK0
+  Clock network: sysclk_BUFG
+--------------------------------------------------------------------------------
+
+
+Derived Constraint Report
+Derived Constraints for TS_sys_clk_pin
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_sys_clk_pin                 |     10.000ns|      5.340ns|      9.023ns|            0|            0|            0|       352690|
+| TS_sysclk                     |     10.000ns|      9.023ns|          N/A|            0|            0|       352690|            0|
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+All constraints were met.
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Clock to Setup on destination clock clk100
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk100         |    9.023|         |         |         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
+
+Constraints cover 352690 paths, 0 nets, and 14369 connections
+
+Design statistics:
+   Minimum period:   9.023ns{1}   (Maximum frequency: 110.828MHz)
+
+
+------------------------------------Footnotes-----------------------------------
+1)  The minimum period statistic assumes all single cycle delays.
+
+Analysis completed Tue Nov 27 15:35:24 2012 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 278 MB
+
+
+

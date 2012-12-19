@@ -1,0 +1,936 @@
+;///////////////////////////////////////////////////////////////////////////////    
+; FILE: 	  main.psm 
+; PROJECT:  ECE 540 Final Project - FPGA-based Color Tracking Robot
+; AUTHOR:   Eric Krause
+; 
+; ABOUT:		Picoblaze program to properly initialize CMUCam4 with the desired 
+;           color tracking parameters and recieve tracking data via UART.  
+;           Controls motors and servos to maintain a fixed distance from the 
+;           object being tracked.  Upon power-on, the system takes approximately 	
+;           5 seconds, to allow gain/white balance to adjust, and send tracking
+;           parameters to the CMUCam.   Initialization progress is indicated on
+;           the 8 LEDs, once all 8 are illuminated, initialization is complete.
+;           
+;           Servo 0 is the Left/Right servo, and Servo 1 is the up/down servo
+;///////////////////////////////////////////////////////////////////////////////  
+;  
+; INTERFACE: 
+;   Buttons:
+;           Center: Resets software and re-initializes CMUCam
+;     
+;           < all other buttons unused >
+; 
+;   Switches:
+;           SW0:  Tracking mode.  SW0 (ON) enables the main functionality of 
+;                 the project.  Robot tracks and maintains distance from/to 
+;                 object with color characteristics listed in constants below.
+;                 While SW0 = 1, robot will follow a color, and try to find a 
+;                 new target if the target is lost
+;
+;           SW1-SW6:  Manual motion.
+;                 SW1: Rotate Servo 0 Left
+;                 SW2: Rotate Servo 0 Right
+;                 SW3: Move Servo 1 Up
+;                 SW4: Move Servo 1 Down
+;                 SW5: Rotate Base Left (Counterclockwise)
+;                 SW6: Rotate Base Right (Clockwise)
+;         
+;           SW7:  Read rensor port and display result on LEDs.  
+;
+;   LEDs:
+;     Initialization:
+;           During initialization, the LEDs function as a progress meter.  
+;           Once all LEDs are lit, the program is ready to begin, and the 
+;           switches will become responsive.
+;
+;     Tracking Mode: (SW0)
+;           During tracking mode, the actions of the bot are displayed on the 
+;           LEDs as follows:
+;             0 - Base is rotating left
+;             1 - Servo 0 is turning left (fast)
+;             2 - Servo 0 is turning left (fast)
+;             3 - Servo 1 turning down
+;             4 - Servo 1 turning up
+;             5 - Servo 0 is turning left (fast)
+;             6 - Servo 0 is turning left (fast)
+;             7 - Base is rotating right
+;           The encoding is meant so that actions moving the camera left show 
+;           up on the left side of the LEDs (and visa versa with right side) and
+;           so that faster/more extreme motions are closer to the "outside" 
+;           (LEDs 7 and 0)
+;            
+;     Sensor Read:  (SW7)
+;         During sensor read, the sensor port is continuously read and displayed
+;         on the LEDs.  
+;            LEDs 0, 1:  Left/right edge sensors (ON = edge detected)
+;            LEDs 5, 4:  Left/right proximity sensors (ON = object detected)
+;
+;///////////////////////////////////////////////////////////////////////////////    
+;
+; ADJUSTABLE CONSTANTS:
+;   Tracked Color:
+;
+;   "The camera board will track all pixels that have a red component that is 
+;   between “red min” and “red max” inclusive, a green component that is between 
+;   “green min” and “green max” inclusive, and a blue component that is between 
+;   “blue min” and “blue max” inclusive... Can be any number between 0 and 255.
+;     -- From CMUCam4 Command List Manual, 
+;   http://www.cmucam.org/attachments/download/636/CMUcam4-Command-List-102.pdf 
+;
+    CONSTANT	RED_MIN		,		  CE  ; ADJUST TO CHANGE TARGET COLOR(S)
+    CONSTANT	RED_MAX		,	    FF  ; ADJUST TO CHANGE TARGET COLOR(S)
+    CONSTANT	GREEN_MIN	,	    65  ; ADJUST TO CHANGE TARGET COLOR(S)
+    CONSTANT	GREEN_MAX ,	    AA  ; ADJUST TO CHANGE TARGET COLOR(S)
+    CONSTANT	BLUE_MIN	,	    50  ; ADJUST TO CHANGE TARGET COLOR(S)
+    CONSTANT	BLUE_MAX  ,		  94  ; ADJUST TO CHANGE TARGET COLOR(S)
+;
+;   Thresholds:
+; 
+;     These constants define when the motors and servos move
+;       note: "X" and "Y" refer to average X and Y positions of tracked object
+;   
+      CONSTANT	LM_THRESH	  ,	45'd	; Base rotates left if X<LM_THRESH
+      CONSTANT	LEFT_FAST	  ,	55'd	;	Servo 0 left fast if LM_THRESH<X<LEFT_FAST
+      CONSTANT	LEFT_SLOW	  ,	72'd	;	Servo 0 left slow if LEFT_FAST<X<LEFT_SLOW
+      ;         NO MOVEMENT         ; No L/R motion if LEFT_SLOW<X<RIGHT_SLOW
+      CONSTANT	RIGHT_SLOW	,	88'd  ; Servo 0 right slow if RIGHT_SLOW<X<RIGHT_FAST
+      CONSTANT	RIGHT_FAST	,	105'd	; Servo 0 right fast if RIGHT_FAST<X<RM__THRESH
+      CONSTANT	RM_THRESH	  ,	115'd	; Base rotates right if RM_THRESH<X
+  
+      CONSTANT	UC_THRESH	,	32      ; Servo 1 look up if Y<UC_THRESH
+      CONSTANT	DC_THRESH	,	46      ; Servo 1 look down if DC_THRESH<Y
+    
+      ; Bot will not respond unless confidence and pixel thresholds are exceeded. 
+      CONSTANT	CONF_THRESH	,	14  ;				min confidence
+      CONSTANT	PIX_THRESH	,	01  ;				min pixels    
+  
+      ; Bot moves forward if pixels tracked is less than FM_THRESH and reverse if 
+      ;   pixels tracked is less than BM_TRESH    
+      CONSTANT	FM_THRESH	  ,	03  ;				forward move thresh
+      CONSTANT	BM_THRESH	  , 05 ;				back move thresh
+
+;   Motor Speeds
+      CONSTANT	SERVO_0_SLOW,	08    ; slow servo speed
+      CONSTANT	SERVO_0_FAST,	0C    ; fast servo speed 
+      CONSTANT	FWD_SP,			  19    ; motor speed (normal forward)
+      CONSTANT	REV_SP,			  17    ; motor speed (normal reverse)
+      CONSTANT	BACKUP_SP,		1A    ; motor speed (when finding edge and reversing)
+      CONSTANT	LR_SP,			  18    ; motor speed (rotating)
+      
+;/////////////////////////////////////////////////////////////////////////////// 
+   
+; =====================================
+; === Fixed Constants               ===
+; =====================================
+CONSTANT	BTN_UP      ,	08		;	button assignments
+CONSTANT	BTN_DOWN    ,	02		;	button assignments
+CONSTANT	BTN_LEFT    ,	10		;	button assignments
+CONSTANT	BTN_RIGHT   ,	04		;	button assignments
+CONSTANT	BTN_CTR     ,	01		;	button assignments
+CONSTANT	SW_0		    ,	01		;	SW assignments
+CONSTANT	SW_1		    ,	02		;	SW assignments
+CONSTANT	SW_2		    ,	04		;	SW assignments
+CONSTANT	SW_3		    ,	08		;	SW assignments
+CONSTANT	SW_4		    ,	10		;	SW assignments
+CONSTANT	SW_5		    ,	20		;	SW assignments
+CONSTANT	SW_6		    ,	40		;	SW assignments
+CONSTANT	SW_7		    ,	80		;	SW assignments
+
+; ASCII Constants
+CONSTANT	HEX_A		    ,	41		; ASCII in hex
+CONSTANT	HEX_C		    ,	43		; ASCII in hex
+CONSTANT	HEX_F		    ,	46    ; ASCII in hex
+CONSTANT	HEX_K		    ,	4B		; ASCII in hex
+CONSTANT	HEX_G		    ,	47		; ASCII in hex
+CONSTANT	HEX_M		    ,	4D		; ASCII in hex
+CONSTANT	HEX_N		    ,	4E    ; ASCII in hex
+CONSTANT	HEX_P		    ,	50		; ASCII in hex
+CONSTANT	HEX_R		    ,	52		; ASCII in hex
+CONSTANT	HEX_T		    ,	54		; ASCII in hex
+CONSTANT	HEX_S		    ,	53		; ASCII in hex
+CONSTANT	HEX_space	  ,	20	  ; ASCII in hex
+CONSTANT	HEX_cr	    ,	0D		; ASCII in hex
+CONSTANT	HEX_0		    ,	30		; ASCII in hex
+CONSTANT	HEX_1		    ,	31    ; ASCII in hex
+
+CONSTANT	LED_TURNL	  ,	01		; led encodings
+CONSTANT	LED_FASTL	  ,	02		; led encodings
+CONSTANT	LED_SLOWL	  ,	04		; led encodings
+CONSTANT	LED_UP		  ,	08		; led encodings
+CONSTANT	LED_DOWN	  ,	10    ; led encodings
+CONSTANT	LED_SLOWR	  ,	20		; led encodings
+CONSTANT	LED_FASTR	  ,	40		; led encodings
+CONSTANT	LED_TURNR	  ,	80		; led encodings
+
+CONSTANT	NOISE_THRESH,	03	  ; camera noise threshold.  Do not adjust	
+CONSTANT	EDGE_MASK,		03	  ;	mask all but edge
+CONSTANT	PROX_MASK,		30	  ;	mask all but prox
+; ==============================================================================
+; === main() initialize hardware, then enter loop polling of switches. 
+;               manual control (SW1-SW7) is fairly straightforward.   
+;               if SW0 (tracking), 3 functions are used to:
+;                 (1) get tracking data from the CMUCam (get_tracking_data)
+;                 (2) process the data, convert it from ascii to binary 
+;                       (process_t_packet)
+;                 (3) move the bot in response (next_move)
+; ==============================================================================
+ADDRESS	000
+		CALL	all_init
+		
+main_loop:		
+		INPUT	s0,		IPORT_sw
+		TEST	s0,		01
+		JUMP	C,		track
+		TEST	s0,		02
+		JUMP	C,		manual_servo_left
+		TEST	s0,		04
+		JUMP	C,		manual_servo_right
+		TEST	s0,		08
+		JUMP	C,		manual_servo_up
+		TEST	s0,		10
+		JUMP	C,		manual_servo_down
+		TEST	s0,		20
+		JUMP	C,		manual_motors_right
+		TEST	s0,		40
+		JUMP	C,		manual_motors_left
+		TEST	s0,		80
+		JUMP	C,		sensor_read
+
+		LOAD	s0,		FF
+		OUTPUT	s0,		OPORT_led
+default:
+		JUMP	main_loop   ;  if no switches flipped, just continue to poll.
+		
+track:
+		CALL	get_tracking_data
+		CALL	process_T_packet
+		CALL	next_move		
+		JUMP	main_loop	
+
+manual_servo_left:
+		LOAD	s3,		08
+		CALL	servo_0_turn_left	
+		CALL	delay_20ms
+		CALL	stop_0
+		JUMP	main_loop
+		
+manual_servo_right:
+		LOAD	s3,		08
+		CALL	servo_0_turn_right	
+		CALL	delay_20ms
+		CALL	stop_0
+		JUMP	main_loop
+		
+manual_servo_up:
+		LOAD	s3,		01
+		CALL	servo_1_turn_up	
+		CALL	delay_20ms
+		JUMP	main_loop
+
+manual_servo_down:
+		LOAD	s3,		01
+		CALL	servo_1_turn_down	
+		CALL	delay_20ms
+		JUMP	main_loop
+
+manual_motors_right:
+		LOAD    s3, 17                 
+    CALL    base_right
+    CALL    delay_1s
+    CALL    motor_init
+    JUMP	  main_loop	
+
+manual_motors_left:
+    LOAD    s3, 17                 
+    CALL    base_left
+    CALL    delay_1s
+    CALL    motor_init
+    JUMP	  main_loop	
+    
+sensor_read:
+		INPUT	  s1,		sensor_port
+		OUTPUT	s1,		OPORT_led
+		JUMP	  main_loop    
+
+; ==============================================================================
+;	next_move: if confidence and tracked pixels exceed minimum thresholds, 
+;            calls the main motion control function, motor_control.
+;            otherwise, prevents bot from moving.  After search_count reaches
+;            zero, the bot will enter "search mode", and try to find new target,
+;            by resetting Y camera position (to forward) and slowly rotating.
+; ==============================================================================
+next_move:
+		;	CHECK CONFIDENCE
+		LOAD	  s0,		CONF_THRESH
+		FETCH	  s1,		CONFIDENCE
+		COMPARE	s1,		s0
+		JUMP	  C,		conf_fail
+
+		;	CHECK PIXELS
+		FETCH	  s1,		PIXELS
+		LOAD	  s0,		PIX_THRESH
+		COMPARE s1,	s0
+		JUMP	  C,		conf_fail;		
+		LOAD	  s0,		00           ; reset the search count if something is in frame
+		STORE	  s0,		search_count ; reset the search count if something is in frame
+		CALL	  motor_motion
+		RETURN
+		
+conf_fail:
+		CALL	  stop_0
+		CALL  	motor_init	
+		LOAD	  s0,		00	
+		OUTPUT	s0,		OPORT_led
+		
+		FETCH	  s0,		search_count
+		COMPARE	s0,	  30'd
+		JUMP	  Z,	  search_mode
+		ADD		  s0,		01
+		STORE	  s0,		search_count
+		RETURN
+		
+search_mode:
+		LOAD	  s3,		3C
+		OUTPUT	s3,		OPORT_led
+		LOAD	  s3,		18
+		CALL	  base_right
+    LOAD	  s3,		3E
+		CALL	  servo_1_turn_up
+		CALL	  delay_20ms
+		RETURN
+
+; ******************************************************************************
+; 	MOTION FUNCTIONS
+; ******************************************************************************		
+;=============================================================================
+motor_motion:  
+;             If base needs to rotate, this is done first. 
+;             Once base no longer needs to rotate, the servos are moved so that
+;             the tracked object is in the center of the frame
+;             Once the object is centered, the motors move the bot forward or 
+;             back depending on number of tracked pixels
+;=============================================================================
+		;	DOES BASE NEED TO ROTATE? 
+		LOAD		s0,		LM_THRESH                                         
+		FETCH		s1,		MX	                                              
+		COMPARE	s1,		s0		                                          
+		JUMP		C,		motor_left	; YES, LEFT    (and return)                      
+		LOAD		s0,		RM_THRESH	                              
+		COMPARE	s0,		s1		                                  
+		JUMP		C,		motor_right	; YES, RIGHT   (and return)       
+		
+		; 	MOTORS DON'T NEED TO TURN, MIGHT NEED TO GO F/R, BUT ONLY
+		; 	IF MX/MY IS IN CENTER OF ALL OTHER THRESHOLDS
+	  CALL	  motor_init
+
+		CALL	  y_motion  
+		CALL	  x_motion  
+		
+		;	MX MUST BE IN CENTER OF THRESHOLDS... OK TO DRIVE F/R
+		FETCH		s1,		PIXELS
+		LOAD		s0,		FM_THRESH                                             
+		COMPARE	s1,		s0                                                
+		JUMP		C,		motor_f      ; (and return to main)                                             
+		LOAD		s0,		BM_THRESH                                             
+		COMPARE	s0,		s1                                                
+		JUMP		C,		motor_r 	; (and return to main)              
+
+no_z:	; DIDN'T NEED TO GO FORWARD OR BACK... DO NOTHING
+		CALL	  motor_init
+		RETURN			
+		
+		
+;=============================================================================
+x_motion:                                                                     
+;=============================================================================		
+		;	TURN SERVO 0 FAST LEFT?
+		FETCH		s1,		MX                                                		
+		LOAD		s0,		LEFT_FAST                                         
+		COMPARE	s1,		s0		                                          
+		JUMP		C,		servo_left_fast
+    
+		;	TURN SERVO 0 SLOW LEFT?
+		FETCH		s1,		MX                                                		
+		LOAD		s0,		LEFT_SLOW                                         
+		COMPARE	s1,		s0		                                          
+		JUMP		C,		servo_left_slow
+    
+		;	TURN SERVO 0 FAST RIGHT?
+		FETCH		s1,		MX                                                		
+		LOAD		s0,		RIGHT_FAST                                        
+		COMPARE	s0,		s1		                                          
+		JUMP		C,		servo_right_fast
+    
+		;	TURN SERVO 0 SLOW RIGHT?
+		FETCH		s1,		MX                                                
+		LOAD		s0,		RIGHT_SLOW                                        
+		COMPARE	s0,		s1		                                          
+		JUMP		C,		servo_right_slow
+		
+		;	DIDN'T NEED TO TURN LEFT OR RIGHT... STOP AND RETURN
+noturns:
+		CALL		stop_0;
+		RETURN
+		
+;=============================================================================	
+y_motion:		                                                        	  
+;=============================================================================		
+		;	LOOK UP/DOWN?		                                        	  
+		LOAD	  s0,		UC_THRESH		                                	  
+		FETCH	  s1,		MY		                                        	  
+		COMPARE	s1,		s0		; my is less than thresh upper thres	  	
+		CALL	  C,		cam_up		                                    	  
+		LOAD	  s0,		DC_THRESH		                                	  
+		COMPARE	s0,		s1		; lower thresh ls less than my			  
+		CALL	  C,		cam_down						                	  
+		
+		;	DIDN'T NEED TO LOOK UP OR DOWN... RETURN
+		RETURN	
+
+;=============================================================================		
+;-----------movement functions------------------------------------------------
+;=============================================================================
+base_left:
+    CALL    motor_1_forward
+    CALL    delay_1ms
+    CALL    motor_3_forward
+    CALL    delay_1ms
+    CALL    motor_0_reverse
+    CALL    delay_1ms
+    CALL    motor_2_reverse
+    CALL    delay_1ms		
+    RETURN
+
+base_right:
+    CALL    motor_1_reverse
+    CALL    delay_1ms
+    CALL    motor_3_reverse
+    CALL    delay_1ms
+    CALL    motor_0_forward
+    CALL    delay_1ms
+    CALL    motor_2_forward
+    CALL    delay_1ms	
+    RETURN
+
+motor_left:                                                                   
+		LOAD	  s0,		LED_TURNL	; leftmost led                                    
+		OUTPUT	s0,		OPORT_led                                             
+		LOAD	  s3,		LR_SP                                                    
+		CALL	  base_right 
+		RETURN                                                        	      
+
+motor_right:                                                                  
+		LOAD	  s0,		LED_TURNR	; rightmost led                                   
+		OUTPUT	s0,		OPORT_led                                             
+		LOAD	  s3,		LR_SP                                                    
+		CALL	  base_left 
+		RETURN                                                           	  
+
+servo_left_fast:                                                              
+		LOAD		s0,		LED_FASTL	                                              
+		OUTPUT	s0,		OPORT_led                                         
+		LOAD		s3,		SERVO_0_FAST
+		CALL		servo_0_turn_left	                                      
+		RETURN	                                                              
+
+servo_right_fast:                                                             
+		LOAD		s0,		LED_FASTR	                                              
+		OUTPUT	s0,		OPORT_led	                                      
+		LOAD		s3,		SERVO_0_FAST                                               
+		CALL		servo_0_turn_right                                        
+		RETURN	                                                              
+
+servo_left_slow:                                                              
+		LOAD		s0,		LED_SLOWL	                                              
+		OUTPUT	s0,		OPORT_led                                         
+		LOAD		s3,		SERVO_0_SLOW                                                        
+		CALL		servo_0_turn_left	                                      
+		RETURN	                                                              
+    
+servo_right_slow:                                                             
+		LOAD		s0,		LED_SLOWR                                              
+		OUTPUT	s0,		OPORT_led	                                      
+		LOAD		s3,		SERVO_0_SLOW                                                        
+		CALL		servo_0_turn_right                                        
+		RETURN		
+
+cam_up:	
+    LOAD	  s3,		LED_UP
+		OUTPUT	s3,		OPORT_led
+		SUB		  s0,		s1			                                    	  
+		LOAD	  s3,		s0		                                        	  
+		SR0		  s3		                                                	  
+		SR0		  s3
+		CALL 	  servo_1_turn_down		                                	  
+		CALL	  delay_20ms		                                        	  
+		RETURN		                                                    	  
+	
+cam_down:
+		LOAD	  s3,		LED_DOWN
+		OUTPUT	s3,		OPORT_led
+		SUB		  s1,		s0			                                    	  
+		LOAD	  s3,		s1		                                        	  
+		SR0		  s3		                                                	  
+		SR0		  s3		                                                	  
+		CALL 	  servo_1_turn_up		                                    	  
+		CALL	  delay_20ms		                                        	  
+		RETURN		                                                    	  
+
+; move forward if not blocked
+motor_f: 
+		LOAD	  s3,		00
+		CALL	  servo_0_turn_right
+		
+		INPUT 	s0,		sensor_port
+		AND		  s0,		EDGE_MASK
+		LOAD	  s1,		00
+		COMPARE s0,	  s1
+		JUMP	  Z,		check_prox
+		
+		INPUT	  s2,		sensor_port
+		OUTPUT	s2,		OPORT_led
+		CALL	  motor_init
+		RETURN
+		
+check_prox:	
+		INPUT 	s0,		sensor_port	
+		AND		  s0,		PROX_MASK
+		LOAD	  s1,		00
+		COMPARE s0,	  s1
+		JUMP	  Z,		ok_to_fwd
+	
+		INPUT	  s2,		sensor_port
+		OUTPUT	s2,		OPORT_led
+		LOAD	  s3,		BACKUP_SP                                                   
+		CALL	  base_reverse
+		CALL	  delay_1s
+		CALL	  delay_1s
+		CALL	  delay_1s
+		CALL	  motor_init  
+		RETURN
+
+ok_to_fwd:		
+		LOAD	  s3,		FWD_SP                                                    
+		CALL	  base_forward 
+		
+		RETURN                                                               
+
+; move in reverse    
+motor_r:
+		LOAD	  s3,		REV_SP                                                    
+		CALL	  base_reverse 
+		
+		RETURN   
+
+; drive motors forward
+base_forward:	
+		CALL    motor_1_forward
+		CALL    delay_1ms
+		CALL    motor_3_forward
+		CALL    delay_1ms
+		CALL    motor_0_forward
+		CALL    delay_1ms
+		CALL    motor_2_forward
+		CALL    delay_1ms				 		
+		RETURN
+
+; drive motors reverse		
+base_reverse:				
+		CALL    motor_1_reverse
+		CALL    delay_1ms
+		CALL    motor_3_reverse
+		CALL    delay_1ms
+		CALL    motor_0_reverse
+		CALL    delay_1ms
+		CALL    motor_2_reverse
+		CALL    delay_1ms				 
+		RETURN	
+		
+; ******************************************************************************
+; 	ADDITIONAL SUPPORT FUNCTIONS
+; ******************************************************************************
+					
+; ==============================================================================
+;	get_tracking_data: sends the command below to CMUCam (without quotes) 
+; "TC <RED_MIN> <RED_MAX> <GREEN_MIN> <GREEN_MAX> <BLUE_MIN> <BLUE_MAX>\r"
+; which activates the track color command on the board. 
+;
+;   uses send_cmd (sends s1, s2 over uart), send_sp (sends space),
+;   bin_to_ascii (converts binary value in s0 to 3-digit ascii number in 
+;   s1, s2, s3), send_num(sends s1, s2, s3 over uart), and send_cr (sends 
+;   carriage return)
+; ==============================================================================
+get_tracking_data:	
+		LOAD	  s1,		HEX_T
+		LOAD	  s2,		HEX_C
+		CALL	  send_cmd
+		CALL	  send_sp
+      
+		LOAD	  s0,		RED_MIN
+		CALL	  bin_to_ascii
+		CALL	  send_num
+		CALL	  send_sp
+      
+		LOAD	  s0,		RED_MAX
+		CALL	  bin_to_ascii
+		CALL	  send_num
+		CALL	  send_sp
+      
+		LOAD	  s0,		GREEN_MIN
+		CALL	  bin_to_ascii
+		CALL	  send_num
+		CALL	  send_sp
+      
+		LOAD	  s0,		GREEN_MAX
+		CALL	  bin_to_ascii
+		CALL	  send_num
+		CALL	  send_sp
+      
+		LOAD	  s0,		BLUE_MIN
+		CALL	  bin_to_ascii
+		CALL	  send_num
+		CALL	  send_sp
+      
+		LOAD	  s0,		BLUE_MAX
+		CALL	  bin_to_ascii
+		CALL	  send_num
+		CALL	  send_cr
+		
+		RETURN
+
+; ==============================================================================
+;	process_T_packet:  
+; Recieves all data passed in T packet, primarily using the read_3_dig function,
+; which recieves a 1 to 3-digit ascii number and converts it to binary. 
+; The following data is stored in respective registers:    
+;
+;   mx – The average of all X position coordinate values of all tracked pixels 
+;   my – The average of all Y position coordinate values of all tracked pixels 
+;   x1 – The X position value of the top left most corner of tracked pixels
+;   y1 – The Y position value of the top left most corner of tracked pixels
+;   x2 – The X position value of the bottom right most corner of tracked pixels
+;   y2 – The Y position value of the bottom right most corner of tracked pixels
+;   pixels – The percentage of the number of pixels tracked in the color 
+;     tracking window, ranging from 0 to 255.  
+;   confidence – The percentage of the number of pixels tracked in the bounding 
+;     box ranging from 0 to 255. 
+; 
+;   -- CMUCam 4 Command Manual
+;
+; Currently, x1/y1 and x2/y2 are not used. 
+; ==============================================================================
+process_T_packet:
+		
+		CALL	  get_char	;
+		COMPARE	s5,		HEX_space	; advance to next loop upon finding T
+		JUMP	  Z,		got_sp ; continue on recieving space (" ")
+		JUMP	  process_T_packet
+    
+got_sp:
+		CALL	  read_3dig	;	
+		STORE	  s0,		MX	;
+      
+		CALL	  read_3dig	;	
+		STORE	  s0,		MY	;
+        
+		CALL	  read_3dig	;	
+		STORE	  s0,		X1	;
+      
+		CALL	  read_3dig	;	
+		STORE	  s0,		Y1	;
+      
+		CALL	  read_3dig	;	
+		STORE	  s0,		X2	;
+      
+		CALL	  read_3dig	;	
+		STORE	  s0,		Y2	;
+      
+		CALL	  read_3dig	;	
+		STORE	  s0,		PIXELS	;
+      
+		CALL	  read_3dig	;	
+		STORE	  s0,		CONFIDENCE	;
+  
+		CALL	  reset_UART_macros ; flush the uart fifos, we are done. 
+		
+		RETURN
+;-------------------------------------------------------------------------------
+; long_delay: delays a long time
+;-------------------------------------------------------------------------------
+long_delay:
+		CALL	  delay_1s
+		CALL	  delay_1s
+		CALL	  delay_1s
+		CALL	  delay_1s
+		CALL	  delay_1s
+		RETURN
+;-------------------------------------------------------------------------------
+; reset_CMU: resets the CMUcam and waits to recieve "A" in response.  Then uart 
+; fifos are flushed and subroutine returns to main. 
+;-------------------------------------------------------------------------------
+reset_CMU:
+		; send "RS\r"
+		LOAD	  s1,		HEX_R
+		LOAD	  s2,		HEX_S
+		CALL	  send_cmd
+		CALL	  send_cr
+		
+rc_next:
+    CALL	  get_char
+		COMPARE	s5,		HEX_A		; was the character "A" ?
+		JUMP	  NZ,		rc_next		; no: get the next char
+		CALL	  reset_UART_macros
+		RETURN
+		
+;-------------------------------------------------------------------------------
+; init_enable_polling: enables polling mode on CMU cam by sending "PM \r" and
+; waiting to recieve "A" in response.  Then uart fifos are flushed 
+;-------------------------------------------------------------------------------
+init_enable_pm:
+		LOAD	  s1,		HEX_P		;
+		LOAD	  s2,		HEX_M		;
+		CALL	  send_cmd			; send "PM "
+		CALL	  send_sp				; send " "
+		LOAD	  s5,		HEX_1		; send "1"
+		CALL	  UART_TX				;
+		CALL	  send_cr				; send "\r"
+
+epm_next:
+		CALL	  get_char
+		COMPARE	s5,		HEX_A		; was the character "A" ?
+		JUMP	  NZ,		epm_next		; no: get the next char
+		CALL	  reset_UART_macros
+		RETURN
+    
+;-------------------------------------------------------------------------------
+; init_enable_nf: enables noise filter on CMU cam by sending:
+; "NF <NOISE_THRESH>\r" and waiting to recieve "A" in response.  
+; Then uart fifos are flushed 
+;-------------------------------------------------------------------------------
+init_enable_nf:
+		LOAD	  s1,		HEX_N 
+		LOAD	  s2,		HEX_F
+		CALL	  send_cmd
+		CALL	  send_sp  
+    
+		LOAD	  s0,		NOISE_THRESH
+		CALL	  bin_to_ascii
+		CALL	  send_num
+		CALL	  send_cr    
+    
+    CALL	  reset_UART_macros
+    RETURN
+    
+;-------------------------------------------------------------------------------
+; get_char
+; recieve character from uart, place in s5.  Cannot fail (never times out)
+;-------------------------------------------------------------------------------
+get_char:
+		CALL 	  UART_RX
+		JUMP	  Z,		get_char;
+		RETURN
+
+;-------------------------------------------------------------------------------
+; read_3dig: output in s0.  reads 1-3 digit ascii number, converts to bin.
+;-------------------------------------------------------------------------------
+read_3dig:
+		CALL	  get_char
+		SUB		  s5,		30
+		LOAD	  s2,		s5 ; sum is s2
+		
+rloop:		
+		CALL	  get_char
+		COMPARE	s5,		HEX_space
+		JUMP	  Z,		r3return
+		COMPARE	s5,		HEX_cr
+		JUMP	  Z,		r3return
+      
+		CALL	  mult_10 	; input s2, output s2 -- multiply stored value by 10
+		SUB		  s5,		30	; convert read char to bin
+		ADD		  s2,		s5	; add to (sum*10)
+		
+		JUMP	  rloop
+		
+r3return:
+		LOAD	  s0,	s2
+		RETURN
+		
+;-------------------------------------------------------------------------------
+; bin_to_ascii
+; convert a binary number in s0 to a 3-digit ascii in s1, s2, s3
+;-------------------------------------------------------------------------------
+bin_to_ascii:
+		LOAD	  s1,		HEX_0
+		LOAD	  s2,		HEX_0
+		LOAD	  s3,		HEX_0
+
+	over_100: ; if until number is less than 100, subtract 100 and store
+            ; number of subtractions in s1
+		COMPARE	s0,		64			  
+		JUMP	  C,	less_than_100	  
+		SUB		  s0,		64			
+		ADD		  s1,		01			
+		JUMP	  over_100
+		
+	less_than_100: ; if until number is less than 10, subtract 10 and store
+                 ; number of subtractions in s2
+		COMPARE	s0,		0A			
+		JUMP	  C,	less_than_10	
+		SUB		  s0,		0A			
+		ADD		  s2,		01			
+		JUMP	  less_than_100		
+		
+	less_than_10:   ; whatever is left at this point can be copied to s3 (ones)
+		ADD		  s3,		s0			
+		RETURN
+		
+;-------------------------------------------------------------------------------
+; mult_10; input s2, output s2
+;   X<<1 + X<<3 = 10X
+;-------------------------------------------------------------------------------		
+mult_10:
+		LOAD	  s1,		s2
+		SL0		  s1			
+		SL0		  s1			
+		SL0		  s1			
+		SL0		  s2			
+		ADD		  s2,	s1	 
+		RETURN
+;-------------------------------------------------------------------------------
+; send_num: input: 3 digit decimal number in ascii
+;					s1 = hundreds
+;					s2 = tens
+;					s3 = ones
+; converts the numbers to ascii and sends them all out over uart
+; avoids sending unnecessary zeros (e.g., sending 005 instead of 5)
+;-------------------------------------------------------------------------------		
+send_num:	
+		LOAD		s5,	s1
+		
+		COMPARE	s5,		HEX_0
+		JUMP		Z,	hundreds_zero
+		CALL		UART_TX				
+		LOAD		s5,	s2				
+		CALL		UART_TX						
+		LOAD		s5,	s3				
+		CALL		UART_TX				
+		RETURN
+		
+hundreds_zero:		
+		LOAD		s5,	s2				
+		COMPARE	s5,		HEX_0		
+		JUMP		Z,		tens_zero	
+		
+		CALL		UART_TX				
+		LOAD		s5,	s3				
+		CALL		UART_TX				
+		RETURN
+		
+tens_zero:					
+		LOAD		s5,	s3				
+		CALL		UART_TX				
+		RETURN		
+;-------------------------------------------------------------------------------
+; send_cmd: sends command "<s1><s2>"
+; input: 	s1 = first letter of cmd
+;  			  s2 = second letter of cmd
+;-------------------------------------------------------------------------------		
+send_cmd:	
+		LOAD	  s5,	s1				;	
+		CALL	  UART_TX				;
+      
+		LOAD	  s5,	s2				;
+		CALL	  UART_TX				;
+		
+		RETURN
+;-------------------------------------------------------------------------------
+; send_cr: sends carriage return
+;-------------------------------------------------------------------------------		
+send_cr: 
+		LOAD	  s5,		HEX_cr
+		CALL	  UART_TX
+		RETURN
+		
+;-------------------------------------------------------------------------------
+; send_sp sends space
+;-------------------------------------------------------------------------------		
+send_sp: 
+		LOAD	  s5,		HEX_space
+		CALL	  UART_TX
+		RETURN
+		
+;-------------------------------------------------------------------------------
+; stops servo 0
+;-------------------------------------------------------------------------------		
+stop_0:
+		LOAD	  s3,		00
+		CALL	  servo_0_turn_left
+		CALL	  delay_20ms
+		RETURN
+		
+;-------------------------------------------------------------------------------
+; all initialization
+; - initializes motors and servos
+; - flushes UART fifo buffers
+; - resets CMUCam
+; - lowers servo 1 to point forward (starts pointing up)
+; - delays ~5 seconds to allow auto gain/white balance to run on CMUCam
+; - enables polling mode on CMUCam (only responds to requests, doesn't stream)
+; - enables noise filtering on CMUCam using NOISE_THRESH constant
+; - 
+;-------------------------------------------------------------------------------	
+all_init:	
+		OUTPUT	s0,		OPORT_led	; 		
+		CALL	  motor_init        ; init hw
+    CALL	  servo_init        ; init hw
+    CALL	  reset_UART_macros	; flush fifos
+		CALL	  delay_1s          
+    
+		LOAD	  s0,		01			    ; time required for CMUCam power cycle
+		OUTPUT	s0,		OPORT_led		; time required for CMUCam power cycle	
+		CALL	  reset_CMU	        ; time required for CMUCam power cycle
+		CALL	  long_delay        ; time required for CMUCam power cycle
+		CALL	  long_delay        ; time required for CMUCam power cycle
+		LOAD	  s0,		03			    ; time required for CMUCam power cycle
+		OUTPUT	s0,		OPORT_led	 	; time required for CMUCam power cycle
+		CALL	  long_delay        ; time required for CMUCam power cycle
+    
+		LOAD	  s3,		3E          ; turn servo 1 down
+		CALL	  servo_1_turn_up   ; turn servo 1 down
+		CALL	  long_delay        ; turn servo 1 down
+		LOAD	  s3,		00          ; turn servo 1 down
+		CALL	  servo_1_turn_up   ; turn servo 1 down
+		
+		
+		LOAD	  s0,		0F			    ; allow 5 seconds for auto gain / white balance
+		OUTPUT	s0,		OPORT_led	 	; allow 5 seconds for auto gain / white balance		
+		CALL	  long_delay        ; allow 5 seconds for auto gain / white balance
+		CALL	  long_delay	      ; allow 5 seconds for auto gain / white balance
+		LOAD	  s0,		1F			    ; allow 5 seconds for auto gain / white balance
+		OUTPUT	s0,		OPORT_led	 	; allow 5 seconds for auto gain / white balance
+		CALL	  long_delay        ; allow 5 seconds for auto gain / white balance
+		CALL	  long_delay	      ; allow 5 seconds for auto gain / white balance
+		LOAD	  s0,		3F			    ; allow 5 seconds for auto gain / white balance
+		OUTPUT	s0,		OPORT_led	 	; allow 5 seconds for auto gain / white balance
+		CALL	  long_delay        ; allow 5 seconds for auto gain / white balance
+		CALL	  long_delay			  ; allow 5 seconds for auto gain / white balance
+        
+		LOAD	  s0,		7F
+		OUTPUT	s0,		OPORT_led		
+		CALL	  init_enable_pm    ; enable polling mode
+    CALL    init_enable_nf    ; enable noise filter
+
+		LOAD	s0,		FF			      ; indicate completion of init
+		OUTPUT	s0,		OPORT_led	  ; indicate completion of init
+		CALL	delay_1s			      ; indicate completion of init
+
+		RETURN
+
+; ******************************************************************************
+; 	INCLUDES
+; ******************************************************************************		
+INCLUDE ".\interfaces\ports_scratchpads.psm"
+INCLUDE ".\interfaces\uart_interface_routines.psm"
+INCLUDE ".\interfaces\delay.psm"
+INCLUDE ".\interfaces\servo_interface_routines.psm"
+INCLUDE ".\interfaces\motor_interface_routines.psm"

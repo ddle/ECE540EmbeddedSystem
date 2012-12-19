@@ -1,0 +1,304 @@
+                 ;------------------------------------------------------------------------------------------
+                 ; Picoblaze Driver Reference Designs for ECE540 Embedded System Projects
+                 ;------------------------------------------------------------------------------------------
+                 ; In this version:
+                 ;   - uart TX/RX
+                 ;   - pan/tilt servos:
+                 ;     + servo 0 : continous (full) rotation servo
+                 ;     + servo 1 : normal (0-180 degree) servo
+                 ;   -
+                 ;
+                 ; Dependencies:
+                 ;   - Hardware
+                 ;     + nexys 3 dev board
+                 ;     + serialUART/USB converter
+                 ;     + hdl: picoblaze_uart_servo_spi.v, kcpsm6.v, uart_tx6.v, uart_rx6.v,
+                 ;       servo_controller.v, pins.ucf
+                 ;   - Software
+                 ;     + include files: uart_interface_routines.psm, servo_interface_routines.psm, delay.psm
+                 ;     + build/loader script : loader.bat
+                 ;
+                 ; Copyright by Dung Le, 2012
+                 ; Reference design by Ken Chapman - Xilinx Ltd
+                 ;
+                 ; 26th Oct 2012 - add pan/tilt servo testing routines
+                 ; 10th Oct 2012 - modified to simple read/echo via uart, move "send" routines to interface
+                 ;                 file.
+                 ;
+                 ; 11th May 2011 - Initial version
+                 ; 6th October 2011 - Corrections to comments only
+                 ; 23rd April 2012 - UART interface routines placed into 'uart_interface_routines.psm'
+                 ;                   to facilitate reuse and provide an INCLUDE directive example.
+                 ;
+                 ;
+                 ;------------------------------------------------------------------------------------------
+                 ; Port definitions
+                 ;------------------------------------------------------------------------------------------
+                 ;
+                 ;
+                 ;------------------------------------------------------------------------------------------
+                 ; Special Register usage
+                 ;------------------------------------------------------------------------------------------
+                 ;
+                 ;
+                 ;------------------------------------------------------------------------------------------
+                 ; Initialise the system
+                 ;------------------------------------------------------------------------------------------
+                 ;
+                 ; A delay of 1 second is implemented which is intended to give time for all the hardware
+                 ; to settle into a stable condition before starting to doing anything. This can be
+                 ; particularly beneficial when dealing with long cables where serial lines can take some
+                 ; time to reach the initial idle state following power being applied.
+                 ;
+     cold_start: CALL delay_1s
+                 ;
+                 CALL reset_UART_macros          ;Reset buffers in UART macros
+                 ;
+                 ;
+                 ; Initialize terminal display, display welcome messages
+                 ; Initialize servos (pan/tilt) : stop/90 degree
+                 ;
+                 CALL clear_screen
+                 CALL welcome_message
+                 CALL servo_init
+                 CALL motor_init
+                 ;
+                 ;
+                 ;------------------------------------------------------------------------------------------
+                 ; Main Program
+                 ;------------------------------------------------------------------------------------------
+                 ;
+                 ;
+           main: 
+                 INPUT s0, IPORT_sw
+                 OUTPUT s0, OPORT_led
+                 CALL UART_RX                    ; wait for a character and return in s5
+                 JUMP Z, main                    ; continue to wait if timeout occurs
+                 CALL UART_TX                    ; echo back msg
+                 COMPARE s5, "w"                 ; test left acceleration
+                 CALL Z, GAS_L
+                 COMPARE s5, "s"                 ; test left deceleration
+                 CALL Z, BREAK_L
+                 COMPARE s5, "e"                 ; test left acceleration
+                 CALL Z, GAS_R
+                 COMPARE s5, "d"                 ; test rgiht deceleration
+                 CALL Z, BREAK_R
+                 COMPARE s5, "r"                 ; test left acceleration
+                 CALL Z, RGAS_L
+                 COMPARE s5, "f"                 ; test left deceleration
+                 CALL Z, RBREAK_L
+                 COMPARE s5, "t"                 ; test left acceleration
+                 CALL Z, RGAS_R
+                 COMPARE s5, "g"                 ; test rgiht deceleration
+                 CALL Z, RBREAK_R
+                 COMPARE s5, "W"                 ; test left acceleration
+                 CALL Z, FW_GAS
+                 COMPARE s5, "S"                 ; test left deceleration
+                 CALL Z, FW_BREAK
+                 COMPARE s5, "A"                 ; test left acceleration
+                 CALL Z, LEFT
+                 COMPARE s5, "D"                 ; test left deceleration
+                 CALL Z, RIGHT
+                 COMPARE s5, " "                 ; test rgiht deceleration
+                 CALL Z, STOP
+                 JUMP main
+         FW_GAS: 
+                 CALL GAS_L
+                 CALL GAS_R
+                 RETURN 
+       FW_BREAK: 
+                 CALL BREAK_L
+                 CALL BREAK_R
+                 RETURN 
+         RV_GAS: 
+                 CALL RGAS_L
+                 CALL RGAS_R
+                 RETURN 
+       RV_BREAK: 
+                 CALL RBREAK_L
+                 CALL RBREAK_R
+                 RETURN 
+           LEFT: 
+                 CALL RGAS_L
+                 CALL GAS_R
+                 RETURN 
+          RIGHT: 
+                 CALL GAS_L
+                 CALL RGAS_R
+                 RETURN 
+          GAS_L: 
+                 FETCH s9, MOTOR_0_SPEED
+                 COMPARE s9, 1F                  ; top speed
+                 RETURN Z
+                 ADD s9, 01
+                 STORE s9, MOTOR_0_SPEED
+                 CALL motor_0_forward
+                 CALL delay_1ms
+                 CALL motor_2_forward
+                 CALL delay_1ms
+                 RETURN 
+        BREAK_L: 
+                 FETCH s9, MOTOR_0_SPEED
+                 COMPARE s9, 00                  ; bottom speed
+                 RETURN Z
+                 SUB s9, 01
+                 STORE s9, MOTOR_0_SPEED
+                 CALL motor_0_forward
+                 CALL delay_1ms
+                 CALL motor_2_forward
+                 CALL delay_1ms
+                 RETURN 
+          GAS_R: 
+                 FETCH s9, MOTOR_2_SPEED
+                 COMPARE s9, 1F                  ; top speed
+                 RETURN Z
+                 ADD s9, 01
+                 STORE s9, MOTOR_2_SPEED
+                 CALL motor_1_forward
+                 CALL delay_1ms
+                 CALL motor_3_forward
+                 CALL delay_1ms
+                 RETURN 
+        BREAK_R: 
+                 FETCH s9, MOTOR_2_SPEED
+                 COMPARE s9, 00                  ; bottom speed
+                 RETURN Z
+                 SUB s9, 01
+                 STORE s9, MOTOR_2_SPEED
+                 CALL motor_1_forward
+                 CALL delay_1ms
+                 CALL motor_3_forward
+                 CALL delay_1ms
+                 RETURN 
+         RGAS_L: 
+                 FETCH s9, MOTOR_0_SPEED
+                 COMPARE s9, 1F                  ; top speed
+                 RETURN Z
+                 ADD s9, 01
+                 STORE s9, MOTOR_0_SPEED
+                 CALL motor_0_reverse
+                 CALL delay_1ms
+                 CALL motor_2_reverse
+                 CALL delay_1ms
+                 RETURN 
+       RBREAK_L: 
+                 FETCH s9, MOTOR_0_SPEED
+                 COMPARE s9, 00                  ; bottom speed
+                 RETURN Z
+                 SUB s9, 01
+                 STORE s9, MOTOR_0_SPEED
+                 CALL motor_0_reverse
+                 CALL delay_1ms
+                 CALL motor_2_reverse
+                 CALL delay_1ms
+                 RETURN 
+         RGAS_R: 
+                 FETCH s9, MOTOR_2_SPEED
+                 COMPARE s9, 1F                  ; top speed
+                 RETURN Z
+                 ADD s9, 01
+                 STORE s9, MOTOR_2_SPEED
+                 CALL motor_1_reverse
+                 CALL delay_1ms
+                 CALL motor_3_reverse
+                 RETURN 
+       RBREAK_R: 
+                 FETCH s9, MOTOR_2_SPEED
+                 COMPARE s9, 00                  ; bottom speed
+                 RETURN Z
+                 SUB s9, 01
+                 STORE s9, MOTOR_2_SPEED
+                 CALL motor_1_reverse
+                 CALL delay_1ms
+                 CALL motor_3_reverse
+                 CALL delay_1ms
+                 RETURN 
+           STOP: 
+                 CALL motor_init
+                 RETURN 
+                 ;------------------------------------------------------------------------------------------
+                 ; Welcome Message.
+                 ;------------------------------------------------------------------------------------------
+                 ;
+                 ; The welcome message includes a display of the version information available from the
+                 ; assembler and the 'hwbuild' from the instantiation of KCPSM6 in the hardware design.
+                 ;
+welcome_message: LOAD sB, welcome_msg'upper
+                 LOAD sA, welcome_msg'lower
+                 CALL send_message
+                 HWBUILD s5                      ;hardware version defines ASCII letter
+                 CALL UART_TX
+                 CALL send_CR
+                 RETURN 
+                 ;
+                 ; Welcome message
+                 ;
+                 STRING banner1$, "  _  ______ ____  ____  __  __  __"
+                 STRING banner2$, " | |/ / ___|  _ \/ ___||  \/  |/ /_"
+                 STRING banner3$, " | ' / |   | |_) \___ \| |\/| | '_ \"
+                 STRING banner4$, " | . \ |___|  __/ ___) | |  | | (_) )"
+                 STRING banner5$, " |_|\_\____|_|   |____/|_|  |_|\___/"
+                 ;
+                 ; Welcome message
+                 ;
+                 STRING welcome1$, "Motor,servo,uart interface test"
+                 STRING welcome2$, "Assembly Date: "
+                 STRING welcome3$, "   Time: "
+                 STRING welcome4$, "Assembler Version: "
+                 STRING welcome5$, "Hardware Design: Testing 8..."
+                 STRING welcome6$, "type here: "
+                 ;
+                 ;
+    welcome_msg: LOAD&RETURN s5, banner1$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, banner2$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, banner3$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, banner4$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, banner5$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, welcome1$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, welcome2$
+                 LOAD&RETURN s5, datestamp$
+                 LOAD&RETURN s5, welcome3$
+                 LOAD&RETURN s5, timestamp$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, welcome4$
+                 LOAD&RETURN s5, KCPSM6_version$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, welcome5$
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, character_CR
+                 LOAD&RETURN s5, welcome6$
+                 LOAD&RETURN s5, character_NULL
+                 ;
+                 ;
+                 ;------------------------------------------------------------------------------------------
+                 ; Include PSM files
+                 ;------------------------------------------------------------------------------------------
+                 ; NOTE : THIS INCLUDE SECTION MUST BE PLACED AT THE BOTTOM
+                 ;
+                 ; The INCLUDE directive enables commonly routines to be kept in their own PSM files and
+                 ; easily reused in different programs (i.e. avoiding 'cut and paste'). It also allows
+                 ; each PSM to remain a more manageable size.
+                 ;
+                 ;
+                 ; Include routines that implement interface with UART macros.
+                 ; -----------------------------------------------------------
+                 ;
+                 INCLUDE "uart_interface_routines.psm"
+                 INCLUDE "delay.psm"
+                 INCLUDE "servo_interface_routines.psm"
+                 INCLUDE "motor_interface_routines.psm"
+                 INCLUDE "ports_scratchpads.psm"
+                 ;
+                 ;
+                 ;------------------------------------------------------------------------------------------
+                 ; End of Program
+                 ;------------------------------------------------------------------------------------------
+                 ;

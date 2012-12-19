@@ -1,0 +1,104 @@
+
+Net clk100 LOC=V10  |  IOSTANDARD=LVCMOS33;
+
+Net led<7> LOC=T11  |  IOSTANDARD=LVCMOS33;
+Net led<6> LOC=R11  |  IOSTANDARD=LVCMOS33;
+Net led<5> LOC=N11  |  IOSTANDARD=LVCMOS33;
+Net led<4> LOC=M11  |  IOSTANDARD=LVCMOS33;
+Net led<3> LOC=V15  |  IOSTANDARD=LVCMOS33;
+Net led<2> LOC=U15  |  IOSTANDARD=LVCMOS33;
+Net led<1> LOC=V16  |  IOSTANDARD=LVCMOS33;
+Net led<0> LOC=U16  |  IOSTANDARD=LVCMOS33;
+#Net YT LOC=U16  |  IOSTANDARD=LVCMOS33;
+# Switches
+Net "sw<0>" LOC = T10 | IOSTANDARD = LVCMOS33; #Bank = 2, pin name = IO_L29N_GCLK2, Sch name = SW0
+Net "sw<1>" LOC = T9 | IOSTANDARD = LVCMOS33; #Bank = 2, pin name = IO_L32P_GCLK29, Sch name = SW1
+Net "sw<2>" LOC = V9 | IOSTANDARD = LVCMOS33; #Bank = 2, pin name = IO_L32N_GCLK28, Sch name = SW2
+Net "sw<3>" LOC = M8 | IOSTANDARD = LVCMOS33; #Bank = 2, pin name = IO_L40P, Sch name = SW3
+Net "sw<4>" LOC = N8 | IOSTANDARD = LVCMOS33; #Bank = 2, pin name = IO_L40N, Sch name = SW4
+Net "sw<5>" LOC = U8 | IOSTANDARD = LVCMOS33; #Bank = 2, pin name = IO_L41P, Sch name = SW5
+Net "sw<6>" LOC = V8 | IOSTANDARD = LVCMOS33; #Bank = 2, pin name = IO_L41N_VREF, Sch name = SW6
+Net "sw<7>" LOC = T5 | IOSTANDARD = LVCMOS33; #Bank = MISC, pin name = IO_L48N_RDWR_B_VREF_2, Sch name = SW7
+
+
+# Push Buttons
+# These have pull down resistors, and provide low output at rest and high output when activated
+Net "btns" LOC = B8 | IOSTANDARD = LVCMOS33; #Bank = 0, pin name = IO_L33P, Sch name = BTNS
+Net "btnu" LOC = A8 | IOSTANDARD = LVCMOS33; #Bank = 0, pin name = IO_L33N, Sch name = BTNU
+Net "btnl" LOC = C4 | IOSTANDARD = LVCMOS33; #Bank = 0, pin name = IO_L1N_VREF, Sch name = BTNL
+Net "btnd" LOC = C9 | IOSTANDARD = LVCMOS33; #Bank = 0, pin name = IO_L34N_GCLK18, Sch name = BTND
+Net "btnr" LOC = D9 | IOSTANDARD = LVCMOS33; # Bank = 0, pin name = IO_L34P_GCLK19, Sch name = BTNR
+
+#Net AT LOC=T10  |  IOSTANDARD=LVCMOS33;
+#Net BT LOC=T9   |  IOSTANDARD=LVCMOS33;
+#Net CT LOC=V9   |  IOSTANDARD=LVCMOS33;
+
+
+#
+#Net SSEG_CA<0> LOC=T17  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_CA<1> LOC=T18  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_CA<2> LOC=U17  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_CA<3> LOC=U18  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_CA<4> LOC=M14  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_CA<5> LOC=N14  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_CA<6> LOC=L14  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_CA<7> LOC=M13  |  IOSTANDARD=LVCMOS33;
+#
+#Net SSEG_AN<0> LOC=P17  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_AN<1> LOC=P18  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_AN<2> LOC=N15  |  IOSTANDARD=LVCMOS33;
+#Net SSEG_AN<3> LOC=N16  |  IOSTANDARD=LVCMOS33;
+#
+#Net uart_tx LOC=N18  |  IOSTANDARD=LVCMOS33;
+#Net uart_rx LOC=N17  |  IOSTANDARD=LVCMOS33;
+Net uart_tx LOC=G11 |  IOSTANDARD=LVCMOS33; #JD1
+Net uart_rx LOC=D12 |  IOSTANDARD=LVCMOS33; #JD7
+##
+#Net spi_sdo LOC=K2  |  IOSTANDARD=LVCMOS33; #JB1
+#Net spi_sdi LOC=K1  |  IOSTANDARD=LVCMOS33; #JB2
+#Net spi_cs  LOC=L4  |  IOSTANDARD=LVCMOS33; #JB3
+#Net spi_clk LOC=L3  |  IOSTANDARD=LVCMOS33; #JB4 
+###
+Net motor_pwm<0> LOC=T12  |  IOSTANDARD=LVCMOS33; #JA1 
+Net motor_dir<0> LOC=V12  |  IOSTANDARD=LVCMOS33; #JA2 
+Net motor_dir<1> LOC=N10  |  IOSTANDARD=LVCMOS33; #JA3
+
+Net motor_pwm<1> LOC=M10  |  IOSTANDARD=LVCMOS33; #JA7
+Net motor_dir<2> LOC=N9   |  IOSTANDARD=LVCMOS33; #JA8 
+Net motor_dir<3> LOC=U11  |  IOSTANDARD=LVCMOS33; #JA9 
+
+Net motor_pwm<2> LOC=K2  |  IOSTANDARD=LVCMOS33; #JB1 
+Net motor_dir<4> LOC=K1  |  IOSTANDARD=LVCMOS33; #JB2 
+Net motor_dir<5> LOC=L4  |  IOSTANDARD=LVCMOS33; #JB3
+
+Net motor_pwm<3> LOC=J3  |  IOSTANDARD=LVCMOS33; #JB7
+Net motor_dir<6> LOC=J1  |  IOSTANDARD=LVCMOS33; #JB8 
+Net motor_dir<7> LOC=K3  |  IOSTANDARD=LVCMOS33; #JB9
+#Net motor_pwm<3> LOC=P11  |  IOSTANDARD=LVCMOS33; #JA4 
+#Net motor_dir<3> LOC=V11  |  IOSTANDARD=LVCMOS33; #JA10 
+
+Net servo_0 LOC=H3 |  IOSTANDARD=LVCMOS33; # JC1
+Net servo_1 LOC=G1 |  IOSTANDARD=LVCMOS33; # JC7
+
+# sensor: edge
+Net "sensor<0>" LOC = L7 | IOSTANDARD = LVCMOS33; # JC2
+Net "sensor<1>" LOC = J7 | IOSTANDARD = LVCMOS33;  # JC8
+Net "sensor<2>" LOC = K6 | IOSTANDARD = LVCMOS33;  # JC3 
+Net "sensor<3>" LOC = J6 | IOSTANDARD = LVCMOS33;  # JC9
+# sensor: wall
+Net "sensor<4>" LOC = G3 | IOSTANDARD = LVCMOS33;  # JC4
+Net "sensor<5>" LOC = F2 | IOSTANDARD = LVCMOS33;  # JC10
+Net "sensor<6>" LOC = F10 | IOSTANDARD = LVCMOS33;  # JD2
+Net "sensor<7>" LOC = C12 | IOSTANDARD = LVCMOS33;  # JD8
+
+
+
+#
+#JA1: T12  JB1: K2  JC1: H3  JD1: G11 
+#JA2: V12  JB2: K1  JC2: L7  JD2: F10 
+#JA3: N10  JB3: L4  JC3: K6  JD3: F11 
+#JA4: P11  JB4: L3  JC4: G3  JD4: E11 
+#JA7: M10  JB7: J3  JC7: G1   D7: D12 
+#JA8: N9   JB8: J1  JC8: J7  JD8: C12 
+#JA9: U11  JB9: K3  JC9: J6  JD9: F12 
+#JA10:V11  JB10:K5 JC10: F2 JD10: E12 
